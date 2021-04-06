@@ -4,164 +4,153 @@
 
 <head>
   <meta charset="utf-8">
-
   <title>40over40 - Voting</title>
+  <link rel="stylesheet" type="text/css" href="modal.css" media="screen"/>
 
   <style>
     body {
+      position: relative;
       background: #ff6f61;
       color: #fff;
+      font: normal normal normal 14px proxima-n-w01-reg,sans-serif;
+    }
+    section {
+      margin: auto;
+      width: 980px;
+    }
+    #content {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .item {
+      min-width: 245px;
+      margin-bottom: 40px;
+      font-size: 16px;
+    }
+    svg {
+      border: solid 5px #fff;
+      margin-bottom: 5px;
+    }
+    .vote-button {
+      margin-top: 10px;
+      background: #fff;
+      width: 197px;
+      padding: 4px;
+      outline: #ff6f61 auto 1px;
+      cursor: pointer;
+    }
+    .vote-button:hover {
+      background: #000;
+      color: #fff;  
+    }
+
+    @media only screen and (max-width: 900px) {
+      section {
+        width: 320px;
+      }
+      #content {
+        text-align: center;
+        display: block;
+      }
     }
   </style>
 
 </head>
 
 <body>
-  <form action="https://us-central1-stashed-online.cloudfunctions.net/vote" method="post" onsubmit="submitVote(event)">
-    <label>
-      <div>Candidate:</div>
-      <input type="text" name="candidate" value="" required />
-    </label>
-    <label>
-      <div>First name:</div>
-      <input type="text" name="voterFirstName" value="" required />
-    </label>
-    <label>
-      <div>Last name:</div>
-      <input type="text" name="voterLastName" value="" required />
-    </label>
-    <label>
-      <div>Email:</div>
-      <input type="email" name="voterEmail" value="" required />
-    </label>
-    <button type="submit">Cast Vote</button>
-  </form>
+  <section>
+    <div id="content"></div> 
+  </section>
+   
 
-  <div id="content">
-    
-  </div>  
+  <div class="modal micromodal-slide" id="modal-2" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-custom-close="">
+      <div class="modal__container w-90 w-40-ns" role="dialog" aria-modal="true" aria-labelledby="modal-2-title">
+        <header class="modal__header">
+          <h3 class="modal__title" id="modal-2-title">Cast Your Vote</h3> 
+          <button class="modal__close" aria-label="Close modal" data-custom-close="" onclick="closeModal(event);"></button> 
+        </header>
+        <form class="black-80" id="modalForm" action="https://us-central1-stashed-online.cloudfunctions.net/vote" method="post" onsubmit="submitVote(event)">
+          <div class="modal__content" id="modal-2-content"> 
+            <div class="measure"> 
+              <label>
+                <div>Nominee: </div>
+                <input type="text" id="candidate" name="candidate" value="" readonly required />
+              </label>
+              <label>
+                <div>Your first name:</div>
+                <input type="text" name="voterFirstName" value="" required />
+              </label>
+              <label>
+                <div>Your last name:</div>
+                <input type="text" name="voterLastName" value="" required />
+              </label>
+              <label>
+                <div>Your Email:</div>
+                <input type="email" name="voterEmail" value="" required />
+              </label>
+            </div>
+          </div> 
+          <footer class="modal__footer"> 
+            <input type="submit" class="modal__btn modal__btn-primary" value="Submit Vote">
+            <a class="f6 ml2 dark-blue no-underline underline-hover js-modal-close-trigger" href="#" aria-label="Close this dialog window" onclick="closeModal(event);">Cancel</a>
+          </footer>
+        </form>
+        <div id="success">
+          Your vote has been submitted successfully.
+        </div>
+        <div id="error">
+          Apologies, there was an issue submitting your vote, please try again.
+        </div>
+        <div id="already">
+          Apologies, you have already voted and so we are unable to accept another vote.
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
+<script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+<script src="config.js"></script>
 <script>
-  const candidates = [
-    { id: 'cindy-gallop', imgUrl: 'https://static.wixstatic.com/media/72ad38_f0d56f76e90f471baf906df302fe72a8~mv2.jpg/v1/crop/x_0,y_155,w_1008,h_1019/fill/w_552,h_560,al_c,q_80,usm_0.66_1.00_0.01/Cind2.webp' }, 
-    { id: 'nicky-bullard', imgUrl: 'https://static.wixstatic.com/media/72ad38_473623dd89784439a4ab1ff76e66e8e1~mv2.jpg/v1/crop/x_211,y_0,w_805,h_815/fill/w_552,h_560,al_c,q_80,usm_0.66_1.00_0.01/NickyBullard-201601060454143.webp' }, 
-    { id: 'richard-barnes', imgUrl: 'https://static.wixstatic.com/media/04aef7_ce9e58d59f0d4422b05ad941451ea66e~mv2.jpg/v1/crop/x_0,y_0,w_988,h_998/fill/w_552,h_560,al_c,q_80,usm_0.66_1.00_0.01/03_Richard_Barnes_3.webp'}, 
-    { id: 'marci-alboher', imgUrl: 'https://static.wixstatic.com/media/04aef7_7ad60f35965c4c43ab66802530f280e5~mv2.jpg/v1/crop/x_0,y_0,w_3605,h_3645/fill/w_552,h_560,al_c,q_80,usm_0.66_1.00_0.01/MarciSuedeJacketHR.webp' }, 
-    { id: 'nicky-palamarczuk', imgUrl: 'https://static.wixstatic.com/media/72ad38_feee79db90724d778ed5c75c98cee1a9~mv2.jpg/v1/crop/x_279,y_6,w_832,h_839/fill/w_552,h_560,al_c,q_80,usm_0.66_1.00_0.01/Nicky-20191125051636422.webp'}, 
-    { id: 'jo-wallace', imgUrl: 'https://static.wixstatic.com/media/04aef7_22e29ba50dd14b61a393be853ed09f8f~mv2.jpg/v1/crop/x_0,y_93,w_1792,h_1806/fill/w_552,h_560,al_c,q_80,usm_0.66_1.00_0.01/JO_WALLACE_BW_GG_CROP.webp' }, 
-    { id: 'lisa-gramling', imgUrl: 'https://static.wixstatic.com/media/04aef7_3ac4f79ed83a4d358f4e3293ed9286a2~mv2.jpg/v1/crop/x_656,y_0,w_3606,h_3648/fill/w_552,h_560,al_c,q_80,usm_0.66_1.00_0.01/LisaGramling2.webp' }, 
-    { id: 'kevin-mercuri', imgUrl: 'https://static.wixstatic.com/media/04aef7_5339f1c1dd1f45eab9aaea2b656ee837~mv2.jpg/v1/crop/x_0,y_16,w_2304,h_2328/fill/w_552,h_560,al_c,q_80,usm_0.66_1.00_0.01/Kevin%20Mercuri%204410%20(2)_JPG.webp' }, 
-    { id: 'richard-robinson', imgUrl: 'https://static.wixstatic.com/media/04aef7_99bf8eef53484db78ccba7678c8a52fa~mv2.jpg/v1/crop/x_361,y_16,w_2349,h_2371/fill/w_552,h_560,al_c,q_80,usm_0.66_1.00_0.01/Richard%20Robinson%202019%20(hi%20res).webp' }, 
-    { id: 'alistair-singer', imgUrl: 'https://static.wixstatic.com/media/04aef7_e7ff633c526449538e7f20b7cbab8e1c~mv2.jpg/v1/crop/x_76,y_0,w_676,h_683/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Alistair%20Singer_JPG.jpg' }, 
-    { id: 'jo-arscott', imgUrl: 'https://static.wixstatic.com/media/04aef7_35de570e205c47dd9d3531769e65c9f9~mv2.jpg/v1/crop/x_3,y_0,w_841,h_851/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Jo%20Arscott.jpg', }, 
-    { id: 'josh-rabinowitz', imgUrl: 'https://static.wixstatic.com/media/04aef7_bd48a06d26e14865b8872d179bdfda13~mv2.jpg/v1/crop/x_199,y_0,w_2372,h_2400/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Josh%20Rabinowitz.jpg', }, 
-    { id: 'emma-sexton', imgUrl: 'https://static.wixstatic.com/media/04aef7_1b59bd3226714f8ab031b8f61b1f06c8~mv2.jpg/v1/crop/x_734,y_605,w_2810,h_2839/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Emma%20Sexton.jpg', }, 
-    { id: 'katie-dreke', imgUrl: 'https://static.wixstatic.com/media/04aef7_0e552df41eb647729f13caf09865912f~mv2.jpg/v1/crop/x_183,y_0,w_653,h_659/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Katie%20Dreke.jpg', }, 
-    { id: 'gabriela-lungu', imgUrl: 'https://static.wixstatic.com/media/04aef7_95935ab93f0846dcad6711b6d09ceb89~mv2.jpg/v1/crop/x_310,y_70,w_699,h_706/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Gabriela%20Lungu.jpg', }, 
-    { id: 'ian-franks', imgUrl: 'https://static.wixstatic.com/media/04aef7_8740cb425ab8414495333093f2abb692~mv2.jpg/v1/crop/x_0,y_26,w_920,h_930/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Ian%20Franks_JPG.jpg', }, 
-    { id: 'sue-unerman', imgUrl: 'https://static.wixstatic.com/media/04aef7_993c897bc4ce423b8874209a16cb167d~mv2.jpg/v1/crop/x_137,y_40,w_685,h_691/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Sue%20Unerman.jpg', }, 
-    { id: 'vanessa-bakewell', imgUrl: 'https://static.wixstatic.com/media/04aef7_244c7762941c40d6b67dfcd8dd921816~mv2.jpg/v1/crop/x_0,y_0,w_626,h_634/fill/w_172,h_174,al_c,q_80,usm_0.66_1.00_0.01/Vanessa%20Bakewell%20headshot%20(2)_JPG.jpg', }, 
-    { id: 'val-vacante', imgUrl: 'https://static.wixstatic.com/media/04aef7_81362875227a4848ae0ff01dc33dcdda~mv2.png/v1/crop/x_20,y_0,w_3826,h_3866/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Val%20Vacante%20Headshot.png', }, 
-    { id: 'laura-jordan-bambach', imgUrl: 'https://static.wixstatic.com/media/04aef7_9f4a3e585da0433382289c1c93154af9~mv2.jpg/v1/crop/x_524,y_1148,w_1522,h_1537/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Laura%20Jordan%20Bambach.jpg', }, 
-    { id: 'clint-lovell', imgUrl: 'https://static.wixstatic.com/media/04aef7_48fe0e11d25b4db2bbc5f0ae7c0ee8d4~mv2.jpg/v1/crop/x_637,y_780,w_1676,h_1698/fill/w_172,h_174,al_c,q_80,usm_0.66_1.00_0.01/Clint%20Lovell.jpg', }, 
-    { id: 'mark-kaminski', imgUrl: 'https://static.wixstatic.com/media/04aef7_3c3bf397c0cf4bfba1f491300661d5be~mv2.png/v1/crop/x_29,y_36,w_423,h_427/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Mark-Kaminski-1200.png', }, 
-    { id: 'steve-bradley', imgUrl: 'https://static.wixstatic.com/media/04aef7_e50b4ae512404683a75280b0ec399de7~mv2.jpg/v1/crop/x_0,y_815,w_3264,h_3298/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Steve%20Bradley.jpg', }, 
-    { id: 'adrian-nicholls', imgUrl: 'https://static.wixstatic.com/media/04aef7_3456eba0471b464e8e6d0cfae212441d~mv2.jpg/v1/crop/x_343,y_219,w_2249,h_2278/fill/w_172,h_174,al_c,q_80,usm_0.66_1.00_0.01/Adrian%20Nicholls.jpg', }, 
-    { id: 'stuart-garvie', imgUrl: 'https://static.wixstatic.com/media/04aef7_c7951eda712a45c594ff05705f32ce69~mv2.jpeg/v1/crop/x_2,y_0,w_445,h_450/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/stuart%20garvie.jpeg', }, 
-    { id: 'regan-warner', imgUrl: 'https://static.wixstatic.com/media/04aef7_979b8a5783544d729f97525fc7dd4414~mv2.png/v1/crop/x_7,y_0,w_728,h_736/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Regan%20Warner.png', }, 
-    { id: 'zai-ortiz', imgUrl: 'https://static.wixstatic.com/media/04aef7_1e02207a38154a63af85901c36a471dd~mv2.png/v1/crop/x_9,y_0,w_1262,h_1280/fill/w_172,h_174,al_c,usm_0.66_1.00_0.01/Zai%20Ortiz.png', }, 
-    { id: 'nic-allum', imgUrl: 'https://static.wixstatic.com/media/04aef7_ffb93118523345158c57e0c801425ae8~mv2.jpg/v1/crop/x_8,y_0,w_1068,h_1079/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Nic%20Allum.jpg', }, 
-    { id: 'sue-higgs', imgUrl: 'https://static.wixstatic.com/media/04aef7_824749e3445d47f19d9ec8acf29ed1c7~mv2.jpg/v1/crop/x_0,y_0,w_3264,h_3297/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/sue%20higgs%20photo.jpg', }, 
-    { id: 'steve-mcinerny', imgUrl: 'https://static.wixstatic.com/media/04aef7_d7f4eae55de74511b05a25ee118d9bcd~mv2.jpg/v1/crop/x_0,y_0,w_921,h_935/fill/w_171,h_174,al_c,q_80,usm_0.66_1.00_0.01/Steve%20McInerny.jpg', }, 
-    { id: 'marc-lewis', imgUrl: 'https://static.wixstatic.com/media/04aef7_21e0557dc6114a048e96ed25f32d6c73~mv2.jpg/v1/crop/x_0,y_174,w_708,h_715/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Marc%20Lewis.jpg', }, 
-    { id: 'pipa-unsworth', imgUrl: 'https://static.wixstatic.com/media/04aef7_ed5c1d8df44749f389488a125755e694~mv2.jpg/v1/crop/x_11,y_0,w_717,h_723/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Pipa%20Unsworth.jpg', }, 
-    { id: 'claire-hynes', imgUrl: 'https://static.wixstatic.com/media/04aef7_52beba59f39c4540b935b753c9f4f4b8~mv2.jpg/v1/crop/x_0,y_173,w_6200,h_6280/fill/w_172,h_174,al_c,q_80,usm_0.66_1.00_0.01/Claire%20Hynes.jpg', }, 
-    { id: 'giles-rhys-jones', imgUrl: 'https://static.wixstatic.com/media/04aef7_aa67e8a509634cd9a7bf5dab9ace227d~mv2.jpg/v1/crop/x_7,y_0,w_1267,h_1280/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Giles%20Rhys%20Jones.jpg', }, 
-    { id: 'john-farquhar-smith', imgUrl: 'https://static.wixstatic.com/media/04aef7_c3c59b69f34a4b62a377a1bde4591032~mv2.jpg/v1/crop/x_116,y_0,w_304,h_307/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/John%20Farquhar-Smith.jpg', }, 
-    { id: 'shaheed-peera', imgUrl: 'https://static.wixstatic.com/media/04aef7_11dca430e5a24f3c89d6b689edf98cc2~mv2.jpg/v1/crop/x_532,y_708,w_372,h_376/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Shaheed%20Peera_JPG.jpg', }, 
-    { id: 'kim-curran', imgUrl: 'https://static.wixstatic.com/media/04aef7_3b0da74bae4847a7b3e81e4a29d94ec7~mv2.jpg/v1/crop/x_4,y_0,w_792,h_800/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/KimCurran-Red.jpg', }, 
-    { id: 'peter-markey', imgUrl: 'https://static.wixstatic.com/media/04aef7_d05b9f506d5646f89b816c48d900fdb3~mv2.png/v1/crop/x_332,y_15,w_454,h_459/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Peter%20Markey.png', }, 
-    { id: 'mark-masters', imgUrl: 'https://static.wixstatic.com/media/04aef7_d6b66b5d172f435fa51157db79efc390~mv2.png/v1/crop/x_233,y_0,w_847,h_856/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Mark%20Masters.png', }, 
-    { id: 'melissa-romo', imgUrl: 'https://static.wixstatic.com/media/04aef7_184edf4467354691b62eb7fa72d791f9~mv2.jpg/v1/crop/x_731,y_467,w_3082,h_3116/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Melissa%20Romo%20headshot2019.jpg', }, 
-    { id: 'louis-loizou', imgUrl: 'https://static.wixstatic.com/media/04aef7_19239825322c4234a21339a327ebe346~mv2.jpg/v1/crop/x_0,y_0,w_1140,h_1152/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Louis_Loizou.jpg', }, 
-    { id: 'david-thomas', imgUrl: 'https://static.wixstatic.com/media/04aef7_35671967f3664eb8b6e64c8ba02969af~mv2.jpg/v1/crop/x_0,y_51,w_854,h_862/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/David%20Thomas.jpg', }, 
-    { id: 'elizabeth-barrutia', imgUrl: 'https://static.wixstatic.com/media/04aef7_d71aee3a0ab444dd9471a3b6d39c212a~mv2.png/v1/crop/x_340,y_0,w_1319,h_1333/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Elizabeth%20Barrutia%20Headshot.png', }, 
-    { id: 'richard-porter', imgUrl: 'https://static.wixstatic.com/media/04aef7_41e4150221a343a59619b0164cd105da~mv2.jpg/v1/crop/x_0,y_311,w_2090,h_2112/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Richard%20Porter.jpg', }, 
-    { id: 'sara-tate', imgUrl: 'https://static.wixstatic.com/media/04aef7_53b374ba0176452d8d315dcb186d9699~mv2.jpg/v1/crop/x_0,y_0,w_3840,h_3880/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Sara%20Tate.jpg', }, 
-    { id: 'katie-leeman', imgUrl: 'https://static.wixstatic.com/media/04aef7_ae760c13e7344e0ca651a08357b27ed1~mv2.png/v1/crop/x_0,y_0,w_853,h_862/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Katie%20Leeman%202.png', }, 
-    { id: 'nolan-bushnell', imgUrl: 'https://static.wixstatic.com/media/04aef7_32f9b04cb9804573ae5cde6d35190894~mv2.png/v1/crop/x_0,y_210,w_851,h_860/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Nolan%20Bushnell.png', }, 
-    { id: 'vineet-raheja', imgUrl: 'https://static.wixstatic.com/media/04aef7_48ff1d96f143468895a190239cf56ad2~mv2.png/v1/crop/x_37,y_83,w_780,h_788/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Vineet%20Raheja.png', }, 
-    { id: 'brook-lundy', imgUrl: 'https://static.wixstatic.com/media/04aef7_7a47f4659fab43ac9a22981b8bddf792~mv2.png/v1/crop/x_0,y_0,w_688,h_695/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Brook%20Lundy.png', }, 
-    { id: 'charlotte-bunyan', imgUrl: 'https://static.wixstatic.com/media/04aef7_31954b66118a4fcea3ee3443f15e3d88~mv2.jpg/v1/crop/x_1969,y_1405,w_2039,h_2059/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Charlotte%20Bunyan.jpg', }, 
-    { id: 'adam-hunt', imgUrl: 'https://static.wixstatic.com/media/04aef7_68bb1ec026134b45a14a3d27e8f87ca5~mv2.jpg/v1/crop/x_0,y_0,w_2358,h_2383/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/ADAM%20Hunt.jpg', }, 
-    { id: 'wayne-deakin', imgUrl: 'https://static.wixstatic.com/media/04aef7_c76987715b2c458e922ef33bfeda7645~mv2.png/v1/crop/x_73,y_0,w_990,h_1000/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Wayne%20Deakin.png', }, 
-    { id: 'yovanka-sanchez', imgUrl: 'https://static.wixstatic.com/media/04aef7_6eaf9edee0cb4aa89cc3575e4de5850a~mv2.jpg/v1/crop/x_542,y_0,w_4428,h_4480/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Yovanka%20Sanchez%20formal%20pic.jpg', }, 
-    { id: 'kate-macnevin', imgUrl: 'https://static.wixstatic.com/media/04aef7_3755515c43fd47f1a492768105ef66d2~mv2.jpg/v1/crop/x_3900,y_454,w_3096,h_3125/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Kate%20MacNevin%20Headshot%202020.jpg', }, 
-    { id: 'lyndon-nicholson', imgUrl: 'https://static.wixstatic.com/media/04aef7_9bc024e9b52d4d1eb50202b7ec35ca56~mv2.png/v1/crop/x_211,y_0,w_1166,h_1177/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/LYNDON%20NICHOLSON.png', }, 
-    { id: 'lyn-macdonald', imgUrl: 'https://static.wixstatic.com/media/04aef7_f4e733f5f347404fa3bca5aab343f1d6~mv2.jpg/v1/crop/x_0,y_807,w_3280,h_3314/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Lyn%20MacDonald.jpg', }, 
-    { id: 'louis-prowe', imgUrl: 'https://static.wixstatic.com/media/04aef7_941e88273bb644ba9567436b77d7268e~mv2.jpg/v1/crop/x_159,y_0,w_962,h_972/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Louis%20Prowe.jpg', }, 
-    { id: 'tony-snow', imgUrl: 'https://static.wixstatic.com/media/04aef7_8d8196d4022f46c38c5f4a4df7631503~mv2.jpg/v1/crop/x_0,y_0,w_1353,h_1367/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Tony%20Snow.jpg', }, 
-    { id: 'james-sandoval', imgUrl: 'https://static.wixstatic.com/media/04aef7_35235d43171845849196ba8d7e5cf01e~mv2.jpg/v1/crop/x_0,y_0,w_2522,h_2545/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/James_Sandoval_MeasureMatch_Founder_and_.jpg', }, 
-    { id: 'bushra-berge', imgUrl: 'https://static.wixstatic.com/media/04aef7_2bb6cfdf45374089b94b093f2f319524~mv2.jpg/v1/crop/x_1323,y_0,w_1707,h_1725/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/BushraBurge.jpg', }, 
-    { id: 'martin-austwick', imgUrl: 'https://static.wixstatic.com/media/04aef7_de9d7e57f1b74d9e93b963c29ecf3d6a~mv2.jpg/v1/crop/x_0,y_0,w_1365,h_1378/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Martin%20Austwick.jpg', }, 
-    { id: 'pancho-gonzalez', imgUrl: 'https://static.wixstatic.com/media/04aef7_f80b2a11476c48a8b58ca36ab712e05b~mv2.png/v1/crop/x_0,y_0,w_853,h_862/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Pancho%20Gonzalez.png', }, 
-    { id: 'jennifer-harris', imgUrl: 'https://static.wixstatic.com/media/04aef7_30180b69c3054436a2ffb01f4912cf6b~mv2.jpg/v1/crop/x_0,y_0,w_2320,h_2342/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Jennifer%20Harris.jpg', }, 
-    { id: 'kath-sharfman', imgUrl: 'https://static.wixstatic.com/media/04aef7_721f73f9daef4f9d9f003f618c70cf04~mv2.jpeg/v1/crop/x_0,y_0,w_2296,h_2318/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Kath%20Sharfman.jpeg', }, 
-    { id: 'caroline-bottomley', imgUrl: 'https://static.wixstatic.com/media/04aef7_df6e385858b64253b1c321a781904746~mv2.jpg/v1/crop/x_135,y_151,w_574,h_580/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Caroline%20Bottomley.jpg', }, 
-    { id: 'aaron-raybe', imgUrl: 'https://static.wixstatic.com/media/04aef7_dea19b14d4f34f0eb38620ee0d7892b5~mv2.jpg/v1/crop/x_0,y_34,w_750,h_758/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Aaron%20Raybe.jpg', }, 
-    { id: 'lisa-lloyd', imgUrl: 'https://static.wixstatic.com/media/04aef7_63f1821610654a888ab2424e1b7e329e~mv2.jpg/v1/crop/x_0,y_0,w_2574,h_2601/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Lisa%20Lloyd.jpg', }, 
-    { id: 'brittany-fero', imgUrl: 'https://static.wixstatic.com/media/04aef7_e4e93c8ea96346dca87f56dc105614a5~mv2.jpg/v1/crop/x_1583,y_341,w_1307,h_1320/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Brittany%20Fero.jpg', }, 
-    { id: 'meredith-oshaughnessy', imgUrl: 'https://static.wixstatic.com/media/04aef7_093bfd0bf4ad4f4893bfeabfd6f28692~mv2.jpg/v1/crop/x_0,y_127,w_1072,h_1082/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Meredith%20OShaughnessy.jpg', },
-    { id:'deborah - longbottom', imgUrl:'https://static.wixstatic.com/media/04aef7_dcc89c28efc945c3987336afee4c8598~mv2.jpg/v1/crop/x_0,y_78,w_1181,h_1192/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Debbie%20Longbottom%20HEADSHOT%20cropped.jpg', },
-    { id:'vicki-maguire', imgUrl:'https://static.wixstatic.com/media/04aef7_7fcccbf09aa648cd8543c175efb64fee~mv2.jpg/v1/crop/x_64,y_287,w_698,h_706/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Vicki%20Maguire.jpg', },
-    { id:'lucy-doubleday', imgUrl:'https://static.wixstatic.com/media/04aef7_2f65ddda877f4f93a72011dff5a462fb~mv2.jpg/v1/crop/x_176,y_143,w_727,h_733/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Lucy%20Doubleday.jpg', },
-    { id:'rachel-haynes', imgUrl:'https://static.wixstatic.com/media/04aef7_d34e5beb6c834ca28ccdebae5e1336d1~mv2.png/v1/crop/x_218,y_0,w_844,h_853/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Rachel%20Haynes.png', },
-    { id:'becky-mcowen-banks', imgUrl:'https://static.wixstatic.com/media/04aef7_12fea3b6e1a3405d99891e19b4b47bfe~mv2.jpg/v1/crop/x_118,y_184,w_627,h_633/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Becky%20McOwen%20Banks.jpg', },
-    { id:'barry-wallace', imgUrl:'https://static.wixstatic.com/media/04aef7_857aa70b1e0a483cb519ef11a35812a7~mv2.jpg/v1/crop/x_176,y_277,w_503,h_508/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Barry%20Wallace.jpg', },
-    { id:'john-messum', imgUrl:'https://static.wixstatic.com/media/04aef7_7bfc301ba76042899cf965da44d081c3~mv2.jpg/v1/crop/x_1166,y_50,w_1767,h_1785/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/John_Messum.jpg', },
-    { id:'jon-haywood', imgUrl:'https://static.wixstatic.com/media/04aef7_3c475e118e4a482088bb97a318026b2e~mv2.jpg/v1/crop/x_487,y_44,w_610,h_618/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Jon%20Haywood%20Profile.jpg', },
-    { id:'alistair-maclenan', imgUrl:'https://static.wixstatic.com/media/04aef7_72f512342bf44eeebca9f5685275376d~mv2.jpg/v1/crop/x_0,y_73,w_1458,h_1473/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/alistairMaclenan_photo.jpg', },
-    { id:'ian-david', imgUrl:'https://static.wixstatic.com/media/04aef7_4cab84478d4c43d2831a99996fe29654~mv2.jpg/v1/crop/x_114,y_59,w_877,h_887/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Ian%20David.jpg', },
-    { id:'charney-magri', imgUrl:'https://static.wixstatic.com/media/04aef7_3bcdba1845e24ee985733a24d9b45d0d~mv2.jpg/v1/crop/x_123,y_171,w_380,h_384/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Charney%20Magri.jpg', },
-    { id:'claire-knowles', imgUrl:'https://static.wixstatic.com/media/04aef7_b624d90f09714c68a4c72e7c017bda59~mv2.jpg/v1/crop/x_1478,y_0,w_5732,h_5792/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Claire%20Knowles.jpg', },
-    { id:'sarah-aird-mash', imgUrl:'https://static.wixstatic.com/media/04aef7_95f12a9bd395438a8b1e5667a233e512~mv2.jpg/v1/crop/x_520,y_0,w_2993,h_3024/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Sarah%20Aird-Mash.jpg', },
-    { id:'cat-davis', imgUrl:'https://static.wixstatic.com/media/04aef7_d702b28b195f45aca60037078262c5de~mv2.jpeg/v1/crop/x_0,y_0,w_960,h_971/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Cat%20Davis.jpeg', },
-    { id:'tami-shelly', imgUrl:'https://static.wixstatic.com/media/04aef7_23b3be50568e4334a0603942c45d323e~mv2.jpg/v1/crop/x_0,y_40,w_1906,h_1927/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/TamiShelly_01.jpg', },
-    { id:'claire-paterson', imgUrl:'https://static.wixstatic.com/media/04aef7_b23b97d498aa45169a0052672570cf27~mv2.jpg/v1/crop/x_541,y_109,w_516,h_521/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Claire%20Paterson.jpg', },
-    { id:'rania-robinson', imgUrl:'https://static.wixstatic.com/media/04aef7_7031bae861be441ebba37389c741b50a~mv2.jpg/v1/crop/x_531,y_412,w_1950,h_1973/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Rania%20Robinson%20(2).jpg', },
-    { id:'zoe-merchant', imgUrl:'https://static.wixstatic.com/media/04aef7_7a40183b404a461bb5607e0db383351f~mv2.jpg/v1/crop/x_1032,y_592,w_2464,h_2493/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Zoe%20Merchant.jpg', },
-    { id:'mary-keane-dawson', imgUrl:'https://static.wixstatic.com/media/04aef7_2c6d0c07b3854a128297f379e940c2f2~mv2.jpg/v1/crop/x_149,y_144,w_615,h_622/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Mary%20Keane%20Dawson2.jpg', },
-    { id:'miranda-glover', imgUrl:'https://static.wixstatic.com/media/04aef7_941f128d1ef141999b9217dee9261d07~mv2.jpg/v1/crop/x_0,y_979,w_4016,h_4058/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Miranda%20Glover.jpg', },
-    { id:'victoria-buchanan', imgUrl:'https://static.wixstatic.com/media/04aef7_5cfd1eaca7064413bf3c723bf8dd345c~mv2.jpg/v1/crop/x_434,y_358,w_1735,h_1755/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/VictoriaBuchanan.jpg', },
-    { id:'heidi-hackemer', imgUrl:'https://static.wixstatic.com/media/04aef7_873ca1dcc9a64fc8899811bd3a7ace7a~mv2.jpg/v1/crop/x_48,y_107,w_691,h_698/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Heidi%20Hackemer.jpg', },
-    { id:'king-britt', imgUrl:'https://static.wixstatic.com/media/04aef7_5be70a283d1f4fb3b1bc3019cd914222~mv2.jpg/v1/crop/x_316,y_0,w_951,h_960/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/King%20Britt.jpg', },
-    { id:'ally-owen', imgUrl:'https://static.wixstatic.com/media/04aef7_c72c3431b9ac4ebe8a625533a2ac4c7f~mv2.jpg/v1/crop/x_245,y_199,w_432,h_436/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Ally%20Owen.jpg', },
-    { id:'caroline-parkes', imgUrl:'https://static.wixstatic.com/media/04aef7_26f2ab38a6c6458ea8e8ac17afc3e031~mv2.jpeg/v1/crop/x_87,y_0,w_1057,h_1067/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Carolines%20Parkes.jpeg', },
-    { id:'jane-austin', imgUrl:'https://static.wixstatic.com/media/04aef7_e7f8b3f62b2244a28d26dfdc9797398d~mv2.jpg/v1/crop/x_0,y_94,w_928,h_939/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Jane%20Austin.jpg', },
-    { id:'carolina-pinheiro', imgUrl:'https://static.wixstatic.com/media/04aef7_258f9cce3b6745eba8cf71c5ecaf8769~mv2.jpg/v1/crop/x_0,y_47,w_960,h_971/fill/w_171,h_173,al_c,q_80,usm_0.66_1.00_0.01/Carolina%20Pinheiro.jpg', },
-    { id:'michelle-hayward', imgUrl:'https://static.wixstatic.com/media/04aef7_0ee36323b8a6496a8852efc267ea7a82~mv2.jpeg/v1/crop/x_4,y_0,w_760,h_768/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Michelle%20Hayward.jpeg', },
-    { id:'ali-hanan', imgUrl:'https://static.wixstatic.com/media/04aef7_de02868ac64a4bff9a015a96a2cdb321~mv2.jpg/v1/crop/x_208,y_0,w_807,h_815/fill/w_172,h_173,al_c,q_80,usm_0.66_1.00_0.01/Ali%20Hanan.jpg'},
-    { id:'jane-evans', imgUrl:'https://static.wixstatic.com/media/04aef7_3bc3d36720ad4b2c9a2f4b64b987e224~mv2.png/v1/crop/x_0,y_6,w_883,h_891/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Jane%20Evans.png'},
-    { id:'andy-mcaleer', imgUrl:'https://static.wixstatic.com/media/04aef7_918c02bcb3c64a4f843821d9dd1c3f94~mv2.png/v1/crop/x_0,y_0,w_682,h_689/fill/w_172,h_173,al_c,usm_0.66_1.00_0.01/Andy%20McAleer.png'},
-    { id:'jonny-watson', imgUrl:'https://static.wixstatic.com/media/04aef7_ef40fb52599344e1ba69afde3541b9e5~mv2.jpg/v1/crop/x_0,y_0,w_872,h_884/fill/w_172,h_174,al_c,q_80,usm_0.66_1.00_0.01/Jonny%20Watson.jpg'},
-  ];
-
   const $content = document.getElementById('content');
   const html = candidates.map(item => `
-    <a href="https://www.40overforty.com/${item.id}" target="_parent">
-      <svg version="1.1" role="img" aria-label="Cindy Gallop" width="138" height="140">
-        <image width="138" height="140" xlink:href="${item.imgUrl}"></image>
-      </svg>
-      <button id="${item.id}" onclick="vote(event)">VOTE</button>
-    </a>
+    <div class="item">
+      <a href="https://www.40overforty.com/${item.id}" target="_parent">
+        <svg version="1.1" role="img" aria-label="Cindy Gallop" width="188" height="190">
+          <image width="188" height="190" xlink:href="${item.imgUrl}"></image>
+        </svg>
+      </a>
+      <div>${item.id}</div>
+      <button id="${item.id}" onclick="vote(event)" class="vote-button">VOTE</button>
+    </div>
   `);
   $content.innerHTML = html.join('');
 
+  const vote = (event) => {
+    event.preventDefault();
+    document.getElementById('candidate').value = event.target.id;
+    MicroModal.show('modal-2'); 
+  }
+
+  const clearModalContent = () => {
+    document.getElementById('modalForm').style.display = 'none';
+    document.getElementById('success').style.display = 'none';
+    document.getElementById('error').style.display = 'none';
+    document.getElementById('already').style.display = 'none';
+  }
+
+  const closeModal = (event) => {
+    event.preventDefault();
+    MicroModal.close('modal-2');   
+    clearModalContent();
+    document.getElementById('modalForm').style.display = 'block';
+  }
 
   const submitVote = (event) => {
     event.preventDefault();
     const form = event.target;
+
     const data = {
       "candidate": form.candidate.value,
       "voterFirstName": form.voterFirstName.value,
@@ -170,12 +159,17 @@
     };
 
     var xhr = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (request.readyState == 4 && request.status == 200) {
-            console.info('success');
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        clearModalContent();
+        if (xhr.status === 200) {
+          document.getElementById('success').style.display = 'block'; 
+        } else if (xhr.status === 400)  {
+          document.getElementById('already').style.display = 'block'; 
         } else {
-          console.info('fail');
+          document.getElementById('error').style.display = 'block';   
         }
+      }
     }
     xhr.open(form.method, form.action, true);
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -183,12 +177,6 @@
     xhr.onloadend = function () {
       // done
     };
-  }
-
-
-  const vote = (event) => {
-    event.preventDefault();
-    alert(event.target.id);
   }
 </script>
 
