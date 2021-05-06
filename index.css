@@ -1,0 +1,95 @@
+body {
+  background:#000;
+  margin:0;
+  color:#fff;
+  font-size: 16px;
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+h1,h2,h3,h4 {
+  font-weight:normal;
+}
+
+h1 {
+  font-size:35px;
+  margin:0 0 30px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+p {
+  margin-bottom:20px;
+}
+
+a {
+  text-decoration:none;
+}
+a:hover {
+  text-decoration:underline;
+}
+
+section {
+  width:620px;
+  margin:auto;
+}
+
+header {
+  background-repeat:no-repeat;
+  background-position:center center;
+  background-image:url('images/logo-large-white.webp'); 
+  height:320px;
+}
+header nav {
+  display:flex;
+  padding-top: 260px;
+  margin:auto;
+}
+header section {
+  width:700px;
+}
+header nav a {
+  flex: 1;
+  text-align:center;
+  text-transform:uppercase;
+  color:rgb(154, 150, 150);
+}
+header nav a.active {
+  color:rgb(255, 111, 97);
+}
+
+main {
+  background:rgb(255, 111, 97);
+  border-top:solid 3px #fff;
+  border-bottom:solid 3px #fff;
+  display:block;
+  padding:50px;
+}
+main nav {
+  display:flex;
+  flex-wrap: wrap;
+  margin: 40px 0 0;
+}
+main nav a {
+  flex:1;
+  margin: 10px 20px 10px 0;
+  background:#fff;  
+}
+
+footer {
+  padding:20px 25px;
+}
+footer nav {
+  display:flex;
+}
+footer nav a {
+  flex:1;
+}
+footer nav a:first-child {
+  min-width:360px;
+}
+.privacy {
+  color: #fff;
+  padding-top:8px;
+}

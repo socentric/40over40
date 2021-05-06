@@ -4,180 +4,93 @@
 
 <head>
   <meta charset="utf-8">
-  <title>40over40 - Voting</title>
-  <link rel="stylesheet" type="text/css" href="modal.css" media="screen"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex"/>
+  <meta property="og:title" content="ABOUT | 40 over Forty"/>
+  <meta property="og:url" content="https://www.40overforty.com"/>
+  <meta property="og:site_name" content="40 over Forty"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="ABOUT | 40 over Forty"/>
+  <link rel="canonical" href="https://www.40overforty.com"/>
 
-  <style>
-    body {
-      position: relative;
-      background: #ff6f61;
-      color: #fff;
-      font: normal normal normal 14px proxima-n-w01-reg,sans-serif;
-    }
-    section {
-      margin: auto;
-      width: 980px;
-    }
-    #content {
-      display: flex;
-      flex-wrap: wrap;
-    }
-    .item {
-      min-width: 245px;
-      margin-bottom: 40px;
-      font-size: 16px;
-    }
-    svg {
-      border: solid 5px #fff;
-      margin-bottom: 5px;
-    }
-    .vote-button {
-      margin-top: 10px;
-      background: #fff;
-      width: 197px;
-      padding: 4px;
-      outline: #ff6f61 auto 1px;
-      cursor: pointer;
-    }
-    .vote-button:hover {
-      background: #000;
-      color: #fff;  
-    }
-
-    @media only screen and (max-width: 900px) {
-      section {
-        width: 320px;
-      }
-      #content {
-        text-align: center;
-        display: block;
-      }
-    }
-  </style>
-
+  <title>ABOUT | 40 over Forty</title>
+  <link rel="stylesheet" type="text/css" href="index.css" media="screen"/>
 </head>
-
 <body>
-  <section>
-    <div id="content"></div> 
-  </section>
-   
-
-  <div class="modal micromodal-slide" id="modal-2" aria-hidden="true">
-    <div class="modal__overlay" tabindex="-1" data-custom-close="">
-      <div class="modal__container w-90 w-40-ns" role="dialog" aria-modal="true" aria-labelledby="modal-2-title">
-        <header class="modal__header">
-          <h3 class="modal__title" id="modal-2-title">Cast Your Vote</h3> 
-          <button class="modal__close" aria-label="Close modal" data-custom-close="" onclick="closeModal(event);"></button> 
-        </header>
-        <form class="black-80" id="modalForm" action="https://us-central1-stashed-online.cloudfunctions.net/vote" method="post" onsubmit="submitVote(event)">
-          <div class="modal__content" id="modal-2-content"> 
-            <div class="measure"> 
-              <label>
-                <div>Nominee: </div>
-                <input type="text" id="candidate" name="candidate" value="" readonly required />
-              </label>
-              <label>
-                <div>Your first name:</div>
-                <input type="text" name="voterFirstName" value="" required />
-              </label>
-              <label>
-                <div>Your last name:</div>
-                <input type="text" name="voterLastName" value="" required />
-              </label>
-              <label>
-                <div>Your Email:</div>
-                <input type="email" name="voterEmail" value="" required />
-              </label>
-            </div>
-          </div> 
-          <footer class="modal__footer"> 
-            <input type="submit" class="modal__btn modal__btn-primary" value="Submit Vote">
-            <a class="f6 ml2 dark-blue no-underline underline-hover js-modal-close-trigger" href="#" aria-label="Close this dialog window" onclick="closeModal(event);">Cancel</a>
-          </footer>
-        </form>
-        <div id="success">
-          Your vote has been submitted successfully.
-        </div>
-        <div id="error">
-          Apologies, there was an issue submitting your vote, please try again.
-        </div>
-        <div id="already">
-          Apologies, you have already voted and so we are unable to accept another vote.
-        </div>
-      </div>
-    </div>
-  </div>
+  <header>
+    <section>
+      <nav>
+        <a href="index.html" class="active">About</a>
+        <a href="nominate.html">Nominate</a>
+        <a href="founders.html">Founders</a>
+        <a href="founders.html">Another</a>
+      </nav>
+    </section>
+  </header>
+  <main>
+    <section>
+      <h1>40 OVER FORTY list is live!</h1>
+      <p>The inaugural 40 OVER FORTY list is now live!</p>
+      <p>Massive congratulations to everyone who made the first-ever 40 Over Forty list. Thank you to everyone who voted and who is being part of the change against ageism. We’ve been overwhelmed by the support and positive feedback we’ve received.</p>
+      <p>This platform was created because the advertising, marketing and media industries are obsessed with youth, and we want to change that obsession to make it a more level playing field, by acknowledging experienced marketers that we can all learn from.</p>
+      <p>Our purpose is to celebrate your number, talent and valuable experience and this year’s list really showcases the great, diverse talent out there.</p>
+      <p>We are in the creative industry, where diversity is essential to our success - and we are passionate about celebrating everyone’s talents and those who have inspired us on our own career journeys.</p>
+      <p>There is more to come from 40 Over Forty very soon, so watch this space!</p>
+      <p>Check out some of the press coverage we have had so far:</p>
+      <nav>
+        <a href="https://marcommnews.com/industrys-first-40-over-forty-platform-launches/" target="_blank">
+          <img src="images/mc-logo.webp" alt="" />
+        </a>
+        <a href="https://www.moreaboutadvertising.com/2020/01/are-you-40-plus-now-theres-an-awards-show-just-for-you/" target="_blank"> 
+          <img src="images/maa-logo.webp" alt="" />
+        </a>
+        <a href="https://www.creativebrief.com/bite/40-over-forty-launches-prove-creative-talent-doesnt-have-used-date" target="_blank">
+          <img src="images/bite-logo.webp" alt="" />
+        </a>
+        <a href="https://www.marketingsociety.com/news/celebrate-your-number-40-over-forty" target="_blank">
+          <img src="images/the-marketing-society-logo.webp" alt="" />
+        </a>
+        <a href="https://www.campaignlive.co.uk/article/ageism-ad-industrys-last-taboo/1673124" target="_blank">
+          <img src="images/campaign_logo.webp" alt="" />
+        </a>
+        <a href="https://www.thestable.com.au/40-over-forty-2020s-champions-defy-the-stereotypes-of-ageing/" target="_blank">
+          <img src="images/the-stable_logo.webp" alt="" />
+        </a>
+        <a href="https://wearethecity.com/40-over-forty-revealed-to-champion-age-diversity/?swcfpc=1" target="_blank">
+          <img src="images/watc-logo.webp" alt="" />
+        </a>
+        <a href="https://mediashotz.co.uk/40-over-forty-names-list-of-marketing-leaders-tackling-ageism/" target="_blank">
+          <img src="images/mediashotz-logo.webp" alt="" />
+        </a>
+      </nav>
+    </section>
+  </main>
+  <footer>
+    <section>
+      <nav>
+        <a href="privacy.html" class="privacy">
+          Privacy
+        </a>
+        <a href="https://twitter.com/40overforty" target="_blank"> 
+          <img src="images/twitter.webp" alt="Twitter - 40overforty" />
+        </a>
+        <a href="https://www.instagram.com/40overfortyww/" target="_blank">
+          <img src="images/instagram.webp" alt="Instagram - 40overfortyww" />
+        </a>
+        <a href="https://www.linkedin.com/company/31432343/admin/" target="_blank">
+          <img src="images/linkedIn.webp" alt="Linkedin" />
+        </a>
+        <a href="https://www.pinterest.co.uk/40overforty/" target="_blank">
+          <img src="images/pintrest.webp" alt="Pinterest" />
+        </a>
+        <a href="mailto:hello40overforty@outlook.com?subject=HELLO%2040%20OVER%20FORTY!" target="_self">
+          <img src="images/envelope.webp" alt="" />
+        </a>
+      </nav>
+    </section>
+  </footer>
 </body>
-
-<script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
-<script src="config.js"></script>
-<script>
-  const $content = document.getElementById('content');
-  const html = candidates.map(item => `
-    <div class="item">
-      <a href="https://www.40overforty.com/${item.id}" target="_parent">
-        <svg version="1.1" role="img" aria-label="Cindy Gallop" width="188" height="190">
-          <image width="188" height="190" xlink:href="${item.imgUrl}"></image>
-        </svg>
-      </a>
-      <div>${item.id}</div>
-      <button id="${item.id}" onclick="vote(event)" class="vote-button">VOTE</button>
-    </div>
-  `);
-  $content.innerHTML = html.join('');
-
-  const vote = (event) => {
-    event.preventDefault();
-    document.getElementById('candidate').value = event.target.id;
-    MicroModal.show('modal-2'); 
-  }
-
-  const clearModalContent = () => {
-    document.getElementById('modalForm').style.display = 'none';
-    document.getElementById('success').style.display = 'none';
-    document.getElementById('error').style.display = 'none';
-    document.getElementById('already').style.display = 'none';
-  }
-
-  const closeModal = (event) => {
-    event.preventDefault();
-    MicroModal.close('modal-2');   
-    clearModalContent();
-    document.getElementById('modalForm').style.display = 'block';
-  }
-
-  const submitVote = (event) => {
-    event.preventDefault();
-    const form = event.target;
-
-    const data = {
-      "candidate": form.candidate.value,
-      "voterFirstName": form.voterFirstName.value,
-      "voterLastName": form.voterLastName.value,
-      "voterEmail": form.voterEmail.value
-    };
-
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) {
-        clearModalContent();
-        if (xhr.status === 200) {
-          document.getElementById('success').style.display = 'block'; 
-        } else if (xhr.status === 400)  {
-          document.getElementById('already').style.display = 'block'; 
-        } else {
-          document.getElementById('error').style.display = 'block';   
-        }
-      }
-    }
-    xhr.open(form.method, form.action, true);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    xhr.send(JSON.stringify(data));
-    xhr.onloadend = function () {
-      // done
-    };
-  }
-</script>
-
+  
 </html>

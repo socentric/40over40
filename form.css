@@ -1,0 +1,151 @@
+
+fieldset {
+  padding: 0;
+  margin: 0 0 30px;
+  border: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+fieldset > div {
+  flex: 1;
+  margin: 0 10px 10px 0;
+  min-width: 48%;
+}
+
+fieldset div.full-width {
+  min-width: 96%;
+}
+
+form div {
+  display: inline-block;
+  font-family: ECB, arial, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  margin-bottom: 12px;
+  padding: 0px;
+  position: relative;
+  top: 0px;
+  transition: all 200ms ease 0s;
+  width: 100%;
+}
+
+div > label {
+  all: unset;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 300;
+  left: 8px;
+  letter-spacing: 0px;
+  opacity: 1;
+  position: absolute;
+  text-align: left;
+  transform: translateY(-50%);
+  padding: 2px 4px;
+  transition: all 200ms ease 0s;
+  top: 50%;
+  font-style: italic;
+}
+
+div > input, 
+div > .select-container {
+  all: unset;
+  appearance: none;
+  /* background:#fff; */
+  box-sizing: border-box;
+  /* color: rgb(24, 24, 24); */
+  display: block;
+  height: 44px;
+  line-height: 1.25;
+  text-align: left;
+  text-overflow: ellipsis;
+  width: 100%;
+  font-size: 16px;
+  border:solid 1px #fff;
+  margin: 0px;
+  padding: 16px 12px;
+  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+
+::placeholder { opacity: 0; transition: opacity .5s; color:#fff; }
+*:focus::placeholder { opacity: 1; }
+
+form div:focus-within label,
+label.input-has-value {
+  font-size:14px;
+  padding:2px 4px;
+  background:rgb(255 112 97);
+  top:0;
+  font-style: normal;
+}
+
+.input-has-value input {
+  background: #e8f0fe;
+  color: #000;
+}
+
+form .select-container {
+  position: relative;
+  z-index: 1;
+}
+
+form .select-container select {
+  -webkit-font-smoothing: antialiased;
+  background: transparent !important;
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  margin: -3px 0 0 -6px;
+  color:#fff;
+  font-size: 16px !important;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  font-style:italic;
+}
+
+textarea {
+  padding: 10px;
+  border: none;
+  outline-color: #ff7061;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 15px;
+}
+
+textarea::placeholder { color:#000; opacity: 1;}
+
+input[type="file"] {
+  padding: 10px 0 0 10px;
+}
+input[type="checkbox"] {
+  margin: 0 7px 0 0px;
+  width: 16px;
+  height: 16px;
+}
+
+button {
+  -webkit-font-smoothing: antialiased;
+  background-color: #000;
+  border: 0px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  height: 44px;
+  letter-spacing: 1.5px;
+  padding: 0px 22px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 150ms ease-in-out 0s;
+  width: 99%;
+}
+
+button span {
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+}
+
+button:active {
+  background-color: rgb(64, 59, 59); 
+}

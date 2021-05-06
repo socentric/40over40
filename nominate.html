@@ -1,0 +1,167 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex"/>
+  <meta property="og:title" content="Nominate | 40 over Forty"/>
+  <meta property="og:url" content="https://www.40overforty.com"/>
+  <meta property="og:site_name" content="40 over Forty"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Nominate | 40 over Forty"/>
+  <link rel="canonical" href="https://www.40overforty.com"/>
+
+  <title>Nominate | 40 over Forty</title>
+  <link rel="stylesheet" type="text/css" href="index.css" media="screen"/>
+  <link rel="stylesheet" type="text/css" href="form.css" media="screen"/>
+  <style>
+    #nomination, #nominationSuccess {
+      transition: all 1000ms ease-in-out 0s; 
+      min-height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <section>
+      <nav>
+        <a href="index.html">About</a>
+        <a href="nominate.html" class="active">Nominate</a>
+        <a href="founders.html">Founders</a>
+        <a href="founders.html">Another</a>
+      </nav>
+    </section>
+  </header>
+  <main>
+    <section id="nomination" style="display:block">
+      <h1>Add your nomination here</h1>
+      <form>
+        <h2>Your details:</h2>
+        <fieldset>
+          <div>
+            <label for="nominatorName">Name</label>
+            <input id="nominatorName" name="nominatorName" type="text" required/>
+          </div>
+          <div>
+            <label for="nominatorEmail">Email</label>
+            <input id="nominatorEmail" name="nominatorEmail" type="email" required/>
+          </div>
+          <input id="over40" name="over40" type="checkbox" required/>
+          <label>I confirm my nominee is over 40 years old.</label>
+        </fieldset>
+
+        <h2>Nominee details:</h2>
+        <fieldset>
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required/>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required/>
+          </div>
+          <div>
+            <label for="jobTitle">Job Title</label>
+            <input id="jobTitle" name="jobTitle" type="text" required/>
+          </div>
+          <div>
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text" required/>
+          </div>
+          <div>
+            <label for="linkedIn">LinkedIn Address</label>
+            <input id="linkedIn" name="linkedIn" type="text" placeholder="eg: olly-owen-2a031615" required/>
+          </div>
+          <div>
+            <label for="twitter">Twitter Handle (optional)</label>
+            <input id="twitter" name="twitter" type="text" placeholder="eg: @ollyowen77"/>
+          </div>
+          <div class="full-width">
+            <div class="select-container">
+              <select id="sector" name="sector" required>
+                <option value=""><i>Advertising / Marketing / Media (select one)</i></option>
+                <option value="Advertising">Advertising</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Media">Media</option>
+              </select>
+            </div>
+          </div>
+          <div class="full-width">
+            <div class="select-container">
+              <select id="side" name="side" required>
+                <option value="">Agency / Brand (select one)</option>
+                <option value="Agency">Agency</option>
+                <option value="Brand">Brand</option>
+              </select>
+            </div>
+          </div>
+          <div class="full-width">
+            <div class="select-container">
+              <select id="country" name="country" required>
+                <option value="">Country (select one)</option>
+                <option value="Australia">Australia</option>
+                <option value="UK">UK</option>
+                <option value="US">US</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <h2>Upload a profile picture:</h2>
+        <fieldset>
+          <div class="full-width">
+            <input id="picture" name="picture" type="file" accept="image/gif, image/jpeg, image/png"  required>
+          </div>
+        </fieldset>
+
+        <h2>Reason for nomination:</h2>
+        <fieldset>
+          <div>
+            <textarea id="reason" name="reason" type="text" cols="72" rows="9" placeholder="Write in a few sentences..." maxlength="750" required></textarea>
+          </div>
+        </fieldset>
+
+        <button>
+          <span>Submit 2021 Nomination</span>
+        </button>
+      </form>
+    </section>
+    <section id="nominationSuccess" style="display:none">
+      <h1>Thank you for adding your nomination</h1>
+      <p>Your nomination is being reviewed by our team and will be uploaded once voting commences on the 17th May.</p>
+      <p>If we require any further information we will be in touch.</p>
+    </section>
+  </main>
+  <footer>
+    <section>
+      <nav>
+        <a href="privacy.html" class="privacy">
+          Privacy
+        </a>
+        <a href="https://twitter.com/40overforty" target="_blank"> 
+          <img src="images/twitter.webp" alt="Twitter - 40overforty" />
+        </a>
+        <a href="https://www.instagram.com/40overfortyww/" target="_blank">
+          <img src="images/instagram.webp" alt="Instagram - 40overfortyww" />
+        </a>
+        <a href="https://www.linkedin.com/company/31432343/admin/" target="_blank">
+          <img src="images/linkedIn.webp" alt="Linkedin" />
+        </a>
+        <a href="https://www.pinterest.co.uk/40overforty/" target="_blank">
+          <img src="images/pintrest.webp" alt="Pinterest" />
+        </a>
+        <a href="mailto:hello40overforty@outlook.com?subject=HELLO%2040%20OVER%20FORTY!" target="_self">
+          <img src="images/envelope.webp" alt="" />
+        </a>
+      </nav>
+    </section>
+  </footer>
+
+  <script src="nominate.js"></script>
+</body>
+  
+</html>
