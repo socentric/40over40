@@ -5,7 +5,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="noindex"/>
   <meta property="og:title" content="Nominate | 40 over Forty"/>
   <meta property="og:url" content="https://www.40overforty.com"/>
@@ -28,11 +27,18 @@
 <body>
   <header>
     <section>
-      <nav>
+      <nav class="mobile-nav">
+        <button id="toggleMenu" class="menu-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" id="menu" width="34" height="34">
+            <path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path>
+          </svg>
+        </button>
+      </nav>
+      <nav class="web-nav">
         <a href="index.html">About</a>
         <a href="nominate.html" class="active">Nominate</a>
+        <a href="nominees.html">2021 Nominees</a>
         <a href="founders.html">Founders</a>
-        <a href="founders.html">Another</a>
       </nav>
     </section>
   </header>
@@ -161,6 +167,7 @@
     </section>
   </footer>
 
+  <script src="index.js"></script>
   <script src="nominate.js"></script>
 </body>
   
