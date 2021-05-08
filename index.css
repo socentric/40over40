@@ -1,5 +1,5 @@
 body {
-  background:#000;
+  background: #3a3a3a;
   margin:0;
   color:#fff;
   font-size: 16px;
@@ -38,14 +38,14 @@ section {
 header {
   background-repeat:no-repeat;
   background-position:top center;
-  background-image:url('images/logo-large-white.webp'); 
-  height:180px;
-  margin-top: 40px;
+  background-image:url('images/logo-large-white.gif'); 
+  height:170px;
+  margin-top: 30px;
 }
 
 header nav {
   display:flex;
-  padding-top: 142px;
+  padding-top: 130px;
   margin:auto;
 }
 
@@ -81,9 +81,11 @@ main nav {
   margin: 40px 0 0;
 }
 main nav a {
-  flex:1;
-  margin: 10px 20px 10px 0;
-  background:#fff;  
+  margin: 5px 10px 5px 0;
+}
+
+main nav img {
+  height: 60px  
 }
 
 footer {
@@ -105,7 +107,7 @@ footer nav a:first-child {
 
 
 
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 420px) {
   body {
     font-size: 12px;
   }
@@ -125,9 +127,9 @@ footer nav a:first-child {
 
   header {
     background-position:left center;
-    background-image:url('images/logo-small-white.webp'); 
+    background-image:url('images/logo-small-white.gif'); 
     height: 80px;
-    margin: 0 0 0 15px;
+    margin: 0 0 0 20px;
   }
 
   header nav {
@@ -137,6 +139,23 @@ footer nav a:first-child {
   .web-nav {
     display: none;
   }
+
+  .menu-icon span {
+    display: none;
+  }
+
+  .menu-open .menu-icon span {
+    display: block;
+    font-size: 34px;
+    position: relative;
+    left: -10px;
+    top: -4px;
+  }
+
+  .menu-open .menu-icon svg {
+    display: none;
+  }
+
 
   .menu-open .web-nav {
     display: flex;
@@ -148,7 +167,14 @@ footer nav a:first-child {
     width: 51%;
     flex:none;
     font-size: 16px;
-    padding: 10px 0;
+    padding: 20px 0 17px;
+    position: relative;
+    left: -16px;
+    border-bottom: solid 1px #5a5a5a;
+  }
+
+  .menu-open .web-nav a:last-child {
+    border-bottom: none;
   }
 
   .mobile-nav {
@@ -173,15 +199,24 @@ footer nav a:first-child {
   }
 
   main nav {
-    margin: 10px 0 0;
+    margin: 15px 0 0;
+  }
+
+  main nav img {
+    height: 28px  
   }
 
   footer {
-    padding:10px 15px;
+    padding: 10px 15px;
   }
 
   footer nav a:first-child {
     min-width: 110px;
+  }
+
+  footer nav a {
+    position: relative;
+    left: 10px;
   }
 
   footer nav img {
