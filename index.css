@@ -75,6 +75,7 @@ main {
   border-bottom:solid 3px #fff;
   display:block;
   padding:50px;
+  min-height: 720px;
 }
 main nav {
   display:flex;
@@ -211,6 +212,7 @@ footer nav a:first-child {
 
   main {
     padding: 20px;
+    min-height: 420px;
   }
 
   main nav {
