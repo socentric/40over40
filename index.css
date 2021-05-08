@@ -25,6 +25,7 @@ p {
 
 a {
   text-decoration:none;
+  color: #fff;
 }
 a:hover {
   text-decoration:underline;
@@ -103,6 +104,20 @@ footer nav a:first-child {
 .privacy {
   color: #fff;
   padding-top:8px;
+}
+
+.quote {
+  font-size: 20px;
+  font-style: italic;
+}
+
+.author {
+  font-size: 20px;
+  margin: -5px 0 50px;
+}
+
+.author a {
+  text-decoration: underline;
 }
 
 
@@ -204,6 +219,18 @@ footer nav a:first-child {
 
   main nav img {
     height: 28px  
+  }
+
+  .quote, .author  {
+    font-size: 14px;
+  }
+  
+  .author {
+    margin: -0 0 25px;
+  }
+
+  .momentum-logo {
+    height: 35px;
   }
 
   footer {
