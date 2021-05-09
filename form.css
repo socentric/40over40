@@ -52,9 +52,7 @@ div > input,
 div > .select-container {
   all: unset;
   appearance: none;
-  /* background:#fff; */
   box-sizing: border-box;
-  /* color: rgb(24, 24, 24); */
   display: block;
   height: 44px;
   line-height: 1.25;
@@ -82,7 +80,7 @@ label.input-has-value {
 
 .input-has-value input {
   background: #e8f0fe;
-  color: #000;
+  color: #000 important;
 }
 
 form .select-container {
