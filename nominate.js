@@ -15,6 +15,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
 
   document.getElementById('nomination').style.display = 'none';
   document.getElementById('nominationSuccess').style.display = 'block';
+  document.querySelectorAll('a')[0].focus();
 })
 
 
