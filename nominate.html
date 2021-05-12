@@ -46,7 +46,7 @@
   <main>
     <section id="nomination" style="display:block">
       <h1>Add your nomination here</h1>
-      <form>
+      <form action="https://us-central1-stashed-online.cloudfunctions.net/vote" method="post" onsubmit="submitNomination(event)">
         <h2>Your details:</h2>
         <fieldset>
           <div>

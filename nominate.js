@@ -4,19 +4,41 @@ document.querySelectorAll('input').forEach(node => node.addEventListener('blur',
   $label.classList[actionType]('input-has-value');
 }));
 
-document.querySelector('form').addEventListener('submit', function(event) {
+const submitNomination = (event) => {
   event.preventDefault();
-  const queryObj = {};
-  const formData = new FormData(this);
+
+  const form = event.target;
+  const data = {};
+  const formData = new FormData(form);
   [...formData.entries()].forEach((entry) => {
-    queryObj[entry[0]] = entry[1];
+    data[entry[0]] = entry[1];
   })
-  console.log(queryObj);
 
-  document.getElementById('nomination').style.display = 'none';
-  document.getElementById('nominationSuccess').style.display = 'block';
-  document.querySelectorAll('a')[0].focus();
-})
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        // Success
+        document.getElementById('nomination').style.display = 'none';
+        document.getElementById('nominationSuccess').style.display = 'block';
 
+      } else if (xhr.status === 400)  {
+        // Already nominated
+        alert('already nominated');
 
+      } else {
+        // Error
+        alert('error')
+        
+      }
+      document.querySelectorAll('a')[0].focus();
+    }
+  }
+  xhr.open(form.method, form.action, true);
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  xhr.send(JSON.stringify(data));
+  xhr.onloadend = function () {
+    // done
+  };
+}
 // https://masteringjs.io/tutorials/fundamentals/upload-file
