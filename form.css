@@ -90,7 +90,6 @@ form .select-container {
 
 form .select-container select {
   -webkit-font-smoothing: antialiased;
-  background: transparent !important;
   display: block;
   cursor: pointer;
   width: 100%;
@@ -101,6 +100,11 @@ form .select-container select {
   border: none;
   outline: none;
   font-style:italic;
+  background-color: inherit;
+}
+
+form .select-container option {
+  background-color: #ff7061;
 }
 
 textarea {
@@ -111,7 +115,7 @@ textarea {
   font-size: 15px;
 }
 
-textarea::placeholder { color:#000; opacity: 1;}
+textarea::placeholder { color:#7f7f7f; opacity: 1;}
 
 input[type="file"] {
   padding: 10px 0 0 10px;
@@ -152,6 +156,7 @@ form button:active {
   form div,
   div > label,
   div > input, 
+  textarea,
   form .select-container select {
     font-size: 14px;
   }

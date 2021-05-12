@@ -45,7 +45,7 @@
   </header>
   <main>
     <section id="nomination" style="display:block">
-      <h1>Add your nomination here</h1>
+      <h1>Submit your nomination here</h1>
       <form action="https://us-central1-stashed-online.cloudfunctions.net/vote" method="post" onsubmit="submitNomination(event)">
         <h2>Your details:</h2>
         <fieldset>
@@ -80,8 +80,8 @@
             <input id="company" name="company" type="text" required/>
           </div>
           <div>
-            <label for="linkedIn">LinkedIn Address</label>
-            <input id="linkedIn" name="linkedIn" type="text" placeholder="eg: /company/40overforty/" required/>
+            <label for="linkedIn">LinkedIn URL</label>
+            <input id="linkedIn" name="linkedIn" type="text" placeholder="eg: https://www.linkedin.com/company/40overforty/" required/>
           </div>
           <div>
             <label for="twitter">Twitter Handle (optional)</label>
@@ -359,7 +359,7 @@
           </div>
         </fieldset>
 
-        <h2>Upload a profile picture:</h2>
+        <p>Upload a high-res portrait picture which can be one of the following web image types: gif, jpeg, png.</p>
         <fieldset>
           <div class="full-width">
             <input id="picture" name="picture" type="file" accept="image/gif, image/jpeg, image/png"  required>
@@ -369,7 +369,7 @@
         <h2>Reason for nomination:</h2>
         <fieldset>
           <div>
-            <textarea id="reason" name="reason" type="text" cols="72" rows="9" placeholder="Write in a few sentences..." maxlength="750" required></textarea>
+            <textarea id="reason" name="reason" type="text" cols="72" rows="9" placeholder="Please write your nomination copy in the 3rd person. 750 characters max." maxlength="750" required></textarea>
           </div>
         </fieldset>
 
@@ -398,9 +398,6 @@
         </a>
         <a href="https://www.linkedin.com/company/31432343/admin/" target="_blank">
           <img src="images/linkedIn.gif" alt="Linkedin" />
-        </a>
-        <a href="https://www.pinterest.co.uk/40overforty/" target="_blank">
-          <img src="images/pintrest.gif" alt="Pinterest" />
         </a>
         <a href="mailto:hello@40overforty.com?subject=HELLO%2040%20OVER%20FORTY!" target="_self">
           <img src="images/envelope.gif" alt="" />

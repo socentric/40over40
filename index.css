@@ -105,7 +105,7 @@ footer nav a {
   flex:1;
 }
 footer nav a:first-child {
-  min-width:360px;
+  min-width:400px;
 }
 .privacy {
   color: #fff;
@@ -124,6 +124,11 @@ footer nav a:first-child {
 
 .author a {
   text-decoration: underline;
+}
+
+.momentum-logo {
+  height: 85px;
+  margin-left: -8px;
 }
 
 
@@ -240,7 +245,8 @@ footer nav a:first-child {
   }
 
   .momentum-logo {
-    height: 35px;
+    height: 40px;
+    margin-left:-3px;
   }
 
   footer {
@@ -248,7 +254,7 @@ footer nav a:first-child {
   }
 
   footer nav a:first-child {
-    min-width: 185px;
+    min-width: 210px;
   }
 
   footer nav a {
