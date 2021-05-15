@@ -1,0 +1,165 @@
+main {
+  padding: 20px ;
+}
+main section {
+  width: 944px;
+}
+
+main nav a {
+  margin: 5px 20px 5px 0;
+}
+
+main nav a:hover {
+  text-decoration: none;
+}
+
+main nav a:hover div {
+  opacity: .6;
+}
+
+main nav p {
+  font-size: 20px;
+  margin: 8px 0 10px;
+}
+
+#thumbnailContainer div {
+  width: 280px;
+  height: 280px;
+  background-size: cover;
+  border: solid 4px #fff;
+}
+
+#detailContainer {
+  position: relative;
+  padding: 40px 0 60px;
+}
+
+#detailContainer div {
+  width: 600px;
+  height: 690px;
+  background-size: cover;
+  border: solid 1px #fff;
+}
+
+#detailContainer div .content {
+  width: 380px;
+  padding: 0 20px;
+  height: 610px;
+  background: #fff;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  color: #000;
+  font-size: 18px;
+}
+
+#detailContainer h2 {
+  color: #000;
+  font-size: 24px;
+}
+
+#detailContainer h3 {
+  color:rgb(255, 111, 97);
+  font-size: 22px;
+  font-weight: bold;
+}
+
+#detailContainer nav {
+  position: absolute;
+  bottom: 15px;
+  padding: 0;
+}
+
+#detailContainer nav img {
+  height: 40px;
+  margin: -4px 10px 0 0;
+}
+
+#detailContainer nav a {
+  color: #000;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.back-to-nominees {
+  display: inline-block;
+  margin: 50% 0 0 -55px;
+}
+
+
+
+@media only screen and (max-width: 420px) {
+  main {
+    padding: 0;
+  }
+
+  main section {
+    width: inherit;
+  }
+
+  main nav {
+    margin: 30px 0 0px;
+  }
+
+  main nav p {
+    font-size: 20px;
+    margin: 10px 0 20px;
+  }
+
+  #thumbnailContainer {
+    text-align: center;
+  }
+
+  #thumbnailContainer div {
+    margin: auto
+  }
+
+  #detailContainer {
+    padding: 0;
+  }
+
+  #detailContainer div {
+    width: 100%;
+    border: none;
+    background-size:contain;
+    background-repeat: no-repeat;
+    padding-top: 140px;
+    height: auto;
+  }
+
+  #detailContainer div .content {
+    position: static;
+    height: auto;
+    z-index: 1;
+    padding: 5px 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #detailContainer h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  #detailContainer h3 {
+    font-size: 15px;
+  }
+
+  #detailContainer p {
+    font-size: 12px;
+  }
+
+  #detailContainer nav {
+    margin-top: 25px;
+    position: static;
+  }
+
+  #detailContainer nav img {
+    height: 30px;
+  }
+  
+  #detailContainer nav a {
+    font-size: 12px;
+  }
+}

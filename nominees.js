@@ -1,25 +1,85 @@
+
 const xmlhttp = new XMLHttpRequest();
-  
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        var json = JSON.parse(this.responseText);
-        debugger;
-        // var keysSorted = Object.keys(json).sort(function(a,b){return json[a].voters.length - json[b].voters.length});   
-        //  debugger;                                                           
-        // keysSorted.reverse().forEach(function(key, index) {
-        //     let html = `
-        //       <tr>
-        //         <th>${index + 1}) ${key} (${json[key].votes})</th>
-        //       </tr>
-        //       <tr>
-        //         <td>
-        //             ${json[key].voters.map(voter => voter.email).join('<br>')}
-        //         </td>
-        //       </tr>
-        //     `;
-        //     $content.insertAdjacentHTML('beforeend', html);
-        // });
-    }
-  };
-  xmlhttp.open("GET", "https://us-central1-stashed-online.cloudfunctions.net/vote", true);
-  xmlhttp.send();
+let nominees = [];
+
+const $thumbnailContainer = document.getElementById('thumbnailContainer');
+$thumbnailContainer.style.display = 'none';
+const $detailContainer = document.getElementById('detailContainer');
+
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+      let json = JSON.parse(this.responseText);
+      json.map((nomination, index) => {
+        const {name} = nomination;
+        const fragment = renderThumbnail(`assets/pic${index+1}.jpg`, name);
+        $thumbnailContainer.insertAdjacentHTML('beforeend', fragment);
+      })
+
+      nominees = json;
+  }
+};
+xmlhttp.open("GET", "https://us-central1-stashed-online.cloudfunctions.net/vote", true);
+xmlhttp.send();
+
+const renderThumbnail = (pictureUrl, name) => {
+  return `<a href="#${name.replace(' ', '_')}">
+      <div style="background-image: url('${pictureUrl}');" title="View ${name}"></div>
+      <p>${name}</p>
+    </a>
+  `;
+}
+
+const renderDetail = (nominee, pictureUrl) => {
+  const {name, company, jobTitle, reason, linkedIn} = nominee;
+  const firstName = name.split(' ')[0];
+  const description = reason.split('\r\n\r\n').reduce((prevValue, value) => {
+    return `${prevValue}<p>${value}</p>`;
+  }, ``)
+
+  return `
+    <div style="background-image: url('${pictureUrl}');" title="${name}">
+      <a class="back-to-nominees" href="#" title="Back to 2021 Nominees">
+        <img src="images/back-arrow.gif" alt="" />
+      </a>  
+      <div class="content">
+        <h2>${name}</h2>
+        <h3>${jobTitle} at ${company}</h3>
+        ${description}
+        <nav>
+          <a class="linkedin" href="${linkedIn}" target="_blank">
+            <img src="images/linkedIn-big.gif" alt="Linkedin" valign="middle" />Check out ${firstName}'s profile on LinkedIn
+          </a>
+        </nav>
+      </div>
+    </div>
+  `;
+}
+
+const hideViews = () => {
+  $thumbnailContainer.style.display = 'none';
+  $detailContainer.style.display = 'none';
+  $detailContainer.innerHTML = '';
+}
+
+const showViews = () => {
+  hideViews();
+
+  const hash = window.location.hash.replace('_', ' ');
+  const nomineeName = hash.replace('#', '');
+
+  if(nomineeName && nominees.length > 0) {
+    const nominee = nominees.filter(nominee => nominee.name = nomineeName)[0];
+    const fragment = renderDetail(nominee, `assets/pic1.jpg`);
+
+    $detailContainer.style.display = 'block';
+    $detailContainer.insertAdjacentHTML('beforeend', fragment);
+  } else if (nomineeName) {
+    setTimeout("showViews()", 400);
+  }
+  else {
+    $thumbnailContainer.style.display = 'block';
+  }
+};
+
+window.addEventListener("load", showViews, false);
+window.addEventListener("hashchange", showViews, false);
