@@ -10,14 +10,14 @@ for(let i=0; i<$inputs.length; i++) {
   $inputs[i].addEventListener('blur', function() {
     const $label = this.offsetParent.querySelector('label');
     const actionType = this.value !== '' ? 'add' : 'remove';
-    $label.classList[actionType]('input-has-value');
+    $label && $label.classList[actionType]('input-has-value');
   })
 }
 
 for(let i=0; i<$inputs.length; i++) {
   $inputs[i].addEventListener('focus', function() {
     const $label = this.offsetParent.querySelector('label');
-    $label.classList.add('input-has-value');
+    $label && $label.classList.add('input-has-value');
   })
 }
 
@@ -28,9 +28,12 @@ const submitNomination = function(event) {
   const form = event.target;
   const data = {};
   const formData = new FormData(form);
-  [...formData.entries()].forEach((entry) => {
+  // [...formData.entries()].forEach((entry) => {
+  //   data[entry[0]] = entry[1];
+  // })
+  for (es = new FormData(form).entries(); !(e = es.next()).done && (entry = e.value);) {
     data[entry[0]] = entry[1];
-  })
+  }
   debugger;
   return false;
 
