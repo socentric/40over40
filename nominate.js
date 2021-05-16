@@ -1,3 +1,10 @@
+if (typeof Element.prototype.addEventListener === 'undefined') {
+  Element.prototype.addEventListener = function (e, callback) {
+    e = 'on' + e;
+    return this.attachEvent(e, callback);
+  };
+}
+
 document.querySelectorAll('input').forEach(node => node.addEventListener('blur', function() {
   debugger;
   const $label = this.offsetParent.querySelector('label');
