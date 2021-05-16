@@ -3,23 +3,28 @@ const xmlhttp = new XMLHttpRequest();
 let nominees = [];
 
 const $thumbnailContainer = document.getElementById('thumbnailContainer');
-$thumbnailContainer.style.display = 'none';
 const $detailContainer = document.getElementById('detailContainer');
 
 xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
-      let json = JSON.parse(this.responseText);
-      json.map((nomination, index) => {
-        const {name} = nomination;
-        const fragment = renderThumbnail(`assets/pic${index+1}.jpg`, name);
-        $thumbnailContainer.insertAdjacentHTML('beforeend', fragment);
-      })
-
-      nominees = json;
+    let json = JSON.parse(this.responseText);
+    nominees = json.filter(nominee => nominee.published);
+    if(nominees.length > 0) {
+      renderThumbnailContainer(nominees);
+    }
   }
 };
 xmlhttp.open("GET", "https://us-central1-stashed-online.cloudfunctions.net/vote", true);
 xmlhttp.send();
+
+const renderThumbnailContainer = (nominees) => {
+  $thumbnailContainer.innerHTML = '';
+  nominees.map((nomination, index) => {
+    const {name} = nomination;
+    const fragment = renderThumbnail(`assets/pic${index+1}.jpg`, name);
+    $thumbnailContainer.insertAdjacentHTML('beforeend', fragment);
+  });
+}
 
 const renderThumbnail = (pictureUrl, name) => {
   return `<a href="#${name.replace(' ', '_')}">
