@@ -34,7 +34,8 @@ const submitNomination = function(event) {
   for (es = new FormData(form).entries(); !(e = es.next()).done && (entry = e.value);) {
     data[entry[0]] = entry[1];
   }
-  debugger;
+
+  console.info(data);
   return false;
 
   var xhr = new XMLHttpRequest();
