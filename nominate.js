@@ -35,9 +35,6 @@ const submitNomination = function(event) {
     data[entry[0]] = entry[1];
   }
 
-  console.info(data);
-  return false;
-
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
@@ -52,7 +49,7 @@ const submitNomination = function(event) {
 
       } else {
         // Error
-        alert('error')
+        alert('error occurred')
 
       }
       document.querySelectorAll('a')[0].focus();
