@@ -1,4 +1,5 @@
 document.querySelectorAll('input').forEach(node => node.addEventListener('blur', function() {
+  debugger;
   const $label = this.offsetParent.querySelector('label');
   const actionType = this.value !== '' ? 'add' : 'remove';
   $label.classList[actionType]('input-has-value');
@@ -29,7 +30,7 @@ const submitNomination = (event) => {
       } else {
         // Error
         alert('error')
-        
+
       }
       document.querySelectorAll('a')[0].focus();
     }
