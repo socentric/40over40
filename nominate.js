@@ -28,6 +28,7 @@ const submitNomination = function(event) {
   const form = event.target;
   const data = {};
   const formData = new FormData(form);
+  debugger;;
   [...formData.entries()].forEach((entry) => {
     data[entry[0]] = entry[1];
   })
