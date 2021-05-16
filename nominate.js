@@ -28,11 +28,11 @@ const submitNomination = function(event) {
   const form = event.target;
   const data = {};
   const formData = new FormData(form);
-  console.info(formData);
+  [...formData.entries()].forEach((entry) => {
+    data[entry[0]] = entry[1];
+  })
   debugger;
-  // [...formData.entries()].forEach((entry) => {
-  //   data[entry[0]] = entry[1];
-  // })
+  return false;
 
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
