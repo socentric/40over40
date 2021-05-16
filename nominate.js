@@ -5,12 +5,22 @@ if (typeof Element.prototype.addEventListener === 'undefined') {
   };
 }
 
-document.querySelectorAll('input').forEach(node => node.addEventListener('blur', function() {
-  debugger;
-  const $label = this.offsetParent.querySelector('label');
-  const actionType = this.value !== '' ? 'add' : 'remove';
-  $label.classList[actionType]('input-has-value');
-}));
+const $inputs = document.querySelectorAll('input');
+for(let i=0; i<$inputs.length; i++) {
+  $inputs[i].addEventListener('blur', function() {
+    const $label = this.offsetParent.querySelector('label');
+    const actionType = this.value !== '' ? 'add' : 'remove';
+    $label.classList[actionType]('input-has-value');
+  })
+}
+
+for(let i=0; i<$inputs.length; i++) {
+  $inputs[i].addEventListener('focus', function() {
+    const $label = this.offsetParent.querySelector('label');
+    $label.classList.add('input-has-value');
+  })
+}
+
 
 const submitNomination = (event) => {
   event.preventDefault();
