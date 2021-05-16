@@ -22,7 +22,7 @@ for(let i=0; i<$inputs.length; i++) {
 }
 
 
-const submitNomination = (event) => {
+const submitNomination = function(event) {
   event.preventDefault();
 
   const form = event.target;

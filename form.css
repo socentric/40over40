@@ -68,6 +68,7 @@ div > .select-container {
   padding: 16px 12px;
   transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
   background: transparent;
+  color: #fff;
 }
 
 ::placeholder { opacity: 0; transition: opacity .5s; color:#fff; }
@@ -77,7 +78,7 @@ div > .select-container {
 label.input-has-value {
   font-size:14px;
   padding: 2px 10px 2px 5px;
-  background:rgb(255 112 97);
+  background:#ff7061;
   top:0;
   font-style: normal;
 }
