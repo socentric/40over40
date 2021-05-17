@@ -8,7 +8,7 @@ const $detailContainer = document.getElementById('detailContainer');
 xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
     let json = JSON.parse(this.responseText);
-    nominees = json.filter(nominee => !nominee.published);
+    nominees = json.filter(nominee => nominee.published);
     if(nominees.length > 0) {
       renderThumbnailContainer(nominees);
     }
