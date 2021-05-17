@@ -26,14 +26,10 @@ const submitNomination = function(event) {
   event.preventDefault();
 
   const form = event.target;
-  const data = {};
   const formData = new FormData(form);
-  // [...formData.entries()].forEach((entry) => {
-  //   data[entry[0]] = entry[1];
-  // })
-  for (es = new FormData(form).entries(); !(e = es.next()).done && (entry = e.value);) {
-    data[entry[0]] = entry[1];
-  }
+
+  const file = form['picture'].files[0];
+  formData.append('picture', file);
 
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
@@ -56,8 +52,8 @@ const submitNomination = function(event) {
     }
   }
   xhr.open(form.method, form.action, true);
-  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  xhr.send(JSON.stringify(data));
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.send(formData);
   xhr.onloadend = function () {
     // done
   };
