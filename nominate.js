@@ -22,7 +22,7 @@ for(let i=0; i<$inputs.length; i++) {
 }
 
 const $selects = document.querySelectorAll('select');
-for(let i=0; i<$inputs.length; i++) {
+for(let i=0; i<$selects.length; i++) {
   $selects[i].addEventListener('change', function() {
     const $parent = this.offsetParent;
     const actionType = this.value !== '' ? 'add' : 'remove';
@@ -33,12 +33,26 @@ for(let i=0; i<$inputs.length; i++) {
 const submitNomination = function(event) {
   event.preventDefault();
 
+  const data = {};
   const form = event.target;
-  const formData = new FormData(form);
 
-  const file = form['picture'].files[0];
-  formData.append('picture', file);
+  for (es = new FormData(form).entries(); !(e = es.next()).done && (entry = e.value);) {
+    const name = entry[0];
+    const value = entry[1]
+    if(name !== 'picture') {
+      data[name] = value;
+    }
+  }
 
+  const myfile = form['picture'].files[0];
+  getBase64( myfile, function( result ) {
+    data.picture = result;
+    sendData(form, data);
+  });
+}
+// https://masteringjs.io/tutorials/fundamentals/upload-file
+
+function sendData(form, data) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
@@ -60,10 +74,20 @@ const submitNomination = function(event) {
     }
   }
   xhr.open(form.method, form.action, true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.send(formData);
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  xhr.send(JSON.stringify(data));
   xhr.onloadend = function () {
     // done
   };
 }
-// https://masteringjs.io/tutorials/fundamentals/upload-file
+
+function getBase64(file, cb) {
+  var reader = new FileReader();
+  reader.readAsText(file);
+  reader.onload = function () {
+    cb(reader.result);
+  };
+  reader.onerror = function (error) {
+    console.log('Error: ', error);
+  };
+}
