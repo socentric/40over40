@@ -26,7 +26,7 @@ form div {
   font-size: 16px;
   font-weight: 300;
   letter-spacing: 0px;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
   padding: 0px;
   position: relative;
   top: 0px;
@@ -75,7 +75,7 @@ div > .select-container {
 *:focus::placeholder { opacity: 1; }
 
 /* form div:focus-within label, */
-label.input-has-value {
+.input-has-value label {
   font-size:14px;
   padding: 2px 10px 2px 5px;
   background:#ff7061;
@@ -83,9 +83,19 @@ label.input-has-value {
   font-style: normal;
 }
 
+div.select-has-value {
+  background: #fff;
+  border: solid 1px #3a3a3a;
+}
+
+div.select-has-value select {
+  color: #3a3a3a !important;
+}
+
 .input-has-value input {
-  background: #e8f0fe;
-  color: #000 important;
+  background: #fff;
+  color: #3a3a3a;
+  border: solid 1px #3a3a3a;
 }
 
 form .select-container {
@@ -190,8 +200,8 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  border: 1px solid #fff;
-  -webkit-text-fill-color: #fff;
-  -webkit-box-shadow: 0 0 0px 1000px #ff0000 inset;
+  border: 1px solid #3a3a3a;
+  -webkit-text-fill-color: #3a3a3a;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
   transition: background-color 5000s ease-in-out 0s;
 }

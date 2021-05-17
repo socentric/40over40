@@ -8,19 +8,27 @@ if (typeof Element.prototype.addEventListener === 'undefined') {
 const $inputs = document.querySelectorAll('input');
 for(let i=0; i<$inputs.length; i++) {
   $inputs[i].addEventListener('blur', function() {
-    const $label = this.offsetParent.querySelector('label');
+    const $parent = this.offsetParent;
     const actionType = this.value !== '' ? 'add' : 'remove';
-    $label && $label.classList[actionType]('input-has-value');
+    $parent.classList[actionType]('input-has-value');
   })
 }
 
 for(let i=0; i<$inputs.length; i++) {
   $inputs[i].addEventListener('focus', function() {
-    const $label = this.offsetParent.querySelector('label');
-    $label && $label.classList.add('input-has-value');
+    const $parent = this.offsetParent;
+    $parent.classList.add('input-has-value');
   })
 }
 
+const $selects = document.querySelectorAll('select');
+for(let i=0; i<$inputs.length; i++) {
+  $selects[i].addEventListener('change', function() {
+    const $parent = this.offsetParent;
+    const actionType = this.value !== '' ? 'add' : 'remove';
+    $parent.classList[actionType]('select-has-value');
+  })
+}
 
 const submitNomination = function(event) {
   event.preventDefault();
