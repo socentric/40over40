@@ -131,6 +131,7 @@ textarea {
   outline-color: #ff7061;
   font-family: Arial,Helvetica,sans-serif;
   font-size: 15px;
+  width: 97%;
 }
 
 textarea::placeholder { color:#7f7f7f; opacity: 1;}
@@ -170,6 +171,13 @@ form button:active {
   background-color: rgb(64, 59, 59); 
 }
 
+#count {
+  font-size: 16px;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
+
 @media only screen and (max-width: 420px) {
   form {
     margin-top: 20px;
@@ -194,6 +202,12 @@ form button:active {
 
   textarea, select {
     width: calc(100% - 20px);
+  }
+
+  #count {
+    top: 0;
+    right: 0;
+    font-size: 13px;
   }
 }
 
@@ -259,10 +273,3 @@ select:-webkit-autofill:focus {
   color:#3a3a3a;
   margin: -20px 0 0;
 }
-
-
-
-
-
-
-

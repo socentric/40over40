@@ -151,3 +151,8 @@ document.getElementById('name').addEventListener('blur', function() {
 document.getElementById('email').addEventListener('blur', function() {
   $alreadyNominatedEmails.innerHTML = nomineeEmails.includes(this.value) ? alreadyNominatedMessage(this.value) : '';
 })
+
+document.getElementById('reason').addEventListener('keyup', function() {
+  const availableXers = this.value.length;
+  document.getElementById('count').innerHTML = `${availableXers} / 700`
+});
