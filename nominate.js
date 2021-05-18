@@ -1,3 +1,6 @@
+const $nominationContainer = document.getElementById('nomination');
+const $messageContainer = document.getElementById('nominationMessage');
+
 if (typeof Element.prototype.addEventListener === 'undefined') {
   Element.prototype.addEventListener = function (e, callback) {
     e = 'on' + e;
@@ -37,24 +40,16 @@ for(let i=0; i<$selects.length; i++) {
 const submitNomination = function(event) {
   event.preventDefault();
 
-  const data = {};
   const form = event.target;
+  const data = {};
 
   for (es = new FormData(form).entries(); !(e = es.next()).done && (entry = e.value);) {
-    const name = entry[0];
-    const value = entry[1]
-    if(name !== 'picture') {
-      data[name] = value;
-    }
+    data[entry[0]] = entry[1];
   }
 
-  const myfile = form['picture'].files[0];
-  getBase64( myfile, function( result ) {
-    data.picture = result;
-    sendData(form, data);
-  });
+
+  sendData(form, data);
 }
-// https://masteringjs.io/tutorials/fundamentals/upload-file
 
 function sendData(form, data) {
   var xhr = new XMLHttpRequest();
@@ -63,7 +58,7 @@ function sendData(form, data) {
       if (xhr.status === 200) {
         // Success
         document.getElementById('nomination').style.display = 'none';
-        document.getElementById('nominationSuccess').style.display = 'block';
+        document.getElementById('nominationMessage').style.display = 'block';
 
       } else if (xhr.status === 400)  {
         // Already nominated
@@ -72,6 +67,7 @@ function sendData(form, data) {
       } else {
         // Error
         alert('error occurred')
+
       }
       document.querySelectorAll('a')[0].focus();
     }
@@ -84,13 +80,25 @@ function sendData(form, data) {
   };
 }
 
-function getBase64(file, cb) {
-  var reader = new FileReader();
-  reader.readAsText(file);
-  reader.onload = function () {
-    cb(reader.result);
-  };
-  reader.onerror = function (error) {
-    console.log('Error: ', error);
-  };
+function showMessage(message) {
+  $nominationContainer.style.display = 'none';
+  $messageContainer.style.display = 'block';
+  $messageContainer.innerHTML = message;
 }
+
+const loadingMessage = `
+  <div>
+    <svg viewBox="0 0 50 50" class="spinner">
+      <circle class="ring" cx="25" cy="25" r="22.5" />
+      <circle class="line" cx="25" cy="25" r="22.5" />
+    </svg>
+  </div>
+`;
+
+const successMessage = `
+  <h1>Thank you for making your nomination</h1>
+  <p>Your nomination is being reviewed by the 40 Over Forty team and will be uploaded once verified.</p>
+  <p>We will be in touch if we require any further information.</p>
+`;
+
+// showMessage(loadingMessage);
