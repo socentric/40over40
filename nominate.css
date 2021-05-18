@@ -1,0 +1,14 @@
+#nomination, #nominationMessage {
+  transition: all 1000ms ease-in-out 0s; 
+  min-height: 490px;
+  display: none;
+}
+#nomination {
+  display: block;
+}
+#nominationMessage .submitting {
+  text-align: center;
+}
+.spinner {
+  margin: 50px 0 30px;
+}

@@ -17,12 +17,7 @@
   <title>NOMINATE | 40 over Forty</title>
   <link rel="stylesheet" type="text/css" href="index.css" media="screen"/>
   <link rel="stylesheet" type="text/css" href="form.css" media="screen"/>
-  <style>
-    #nomination, #nominationSuccess {
-      transition: all 1000ms ease-in-out 0s; 
-      min-height: 500px;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="nominate.css" media="screen"/>
 </head>
 <body>
   <header>
@@ -44,7 +39,7 @@
     </section>
   </header>
   <main>
-    <section id="nomination" style="display:block">
+    <section id="nomination">
       <h1>Submit your nomination here</h1>
       <p>The closing date for nominations is 31.08.2021 and all info supplied will be made public (e.g. on the website & our channels). All nominees must be aged 40 or above at the time of nomination and can only be nominated once. In the spirit of this initiative, we are not accepting self-nominations. <!--Full voting <a style="text-decoration:underline;" href="tc.html">T&C's</a> here.--></p>
       <form action="https://us-central1-stashed-online.cloudfunctions.net/vote" method="post" onsubmit="submitNomination(event)">
@@ -379,13 +374,7 @@
         </button>
       </form>
     </section>
-
-    <section id="nominationMessage" style="display:none">
-      <h1>Thank you for making your nomination</h1>
-      <p>Your nomination is being reviewed by the 40 Over Forty team and will be uploaded once verified.</p>
-      <p>We will be in touch if we require any further information.</p>
-    </section>
-    
+    <section id="nominationMessage"></section>
   </main>
   <footer>
     <section>

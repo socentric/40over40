@@ -37,7 +37,7 @@ for(let i=0; i<$selects.length; i++) {
   })
 }
 
-const submitNomination = function(event) {
+function submitNomination(event) {
   event.preventDefault();
 
   const form = event.target;
@@ -71,22 +71,19 @@ function getBase64(file, cb) {
 } 
 
 function sendData(form, data) {
+  showMessage(loadingMessage);
+
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         // Success
-        document.getElementById('nomination').style.display = 'none';
-        document.getElementById('nominationMessage').style.display = 'block';
-
+        showMessage(successMessage);
       } else if (xhr.status === 400)  {
-        // Already nominated
-        alert('already nominated');
-
+        showMessage(alreadyNominatedMessage(data.name, true));
       } else {
         // Error
-        alert('error occurred')
-
+        showMessage(errorMessage);
       }
       document.querySelectorAll('a')[0].focus();
     }
@@ -106,18 +103,27 @@ function showMessage(message) {
 }
 
 const loadingMessage = `
-  <div>
+  <div class="submitting">
     <svg viewBox="0 0 50 50" class="spinner">
       <circle class="ring" cx="25" cy="25" r="22.5" />
       <circle class="line" cx="25" cy="25" r="22.5" />
     </svg>
+    <h2>Submiting your nomination...</h2>
   </div>
 `;
 
 const successMessage = `
   <h1>Thank you for making your nomination</h1>
-  <p>Your nomination is being reviewed by the 40 Over Forty team and will be uploaded once verified.</p>
-  <p>We will be in touch if we require any further information.</p>
+  <p>Your nomination is being reviewed by our 40 Over Forty team and will be uploaded once verified. We will be in touch if we require any further information.</p>
 `;
 
-// showMessage(loadingMessage);
+const errorMessage = `
+  <h1>Apologies an error has occurred</h1>
+  <p>Please let us know at <a style="text-decoration:underline" href="mailto:hello@40overforty.com?subject=Error occurred while making nomination">hello@40overforty.com</a> so we can resolve the issue and help you add your nomination.<p/>
+`;
+
+function alreadyNominatedMessage(name, withHeader) {
+  const header = `<h1>Nomination already received</h1>`
+  const paragraph = `<p>${name} is a popular choice and they have already been nominated! Why not nominate someone else?</p>`;
+  return withHeader ? `${header + paragraph}` : paragraph;
+}
