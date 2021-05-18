@@ -53,7 +53,6 @@ div > label {
 
 div > input, 
 div > .select-container {
-  all: unset;
   appearance: none;
   box-sizing: border-box;
   display: block;

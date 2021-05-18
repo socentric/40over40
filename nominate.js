@@ -8,16 +8,20 @@ if (typeof Element.prototype.addEventListener === 'undefined') {
 const $inputs = document.querySelectorAll('input');
 for(let i=0; i<$inputs.length; i++) {
   $inputs[i].addEventListener('blur', function() {
-    const $parent = this.offsetParent;
-    const actionType = this.value !== '' ? 'add' : 'remove';
-    $parent.classList[actionType]('input-has-value');
+    if(this.type !== 'checkbox') {
+      const $parent = this.offsetParent;
+      const actionType = this.value !== '' ? 'add' : 'remove';
+      $parent.classList[actionType]('input-has-value');
+    }
   })
 }
 
 for(let i=0; i<$inputs.length; i++) {
   $inputs[i].addEventListener('focus', function() {
-    const $parent = this.offsetParent;
-    $parent.classList.add('input-has-value');
+    if(this.type !== 'checkbox') {
+      const $parent = this.offsetParent;
+      $parent.classList.add('input-has-value');
+    }
   })
 }
 
@@ -68,7 +72,6 @@ function sendData(form, data) {
       } else {
         // Error
         alert('error occurred')
-
       }
       document.querySelectorAll('a')[0].focus();
     }
