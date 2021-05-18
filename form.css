@@ -175,6 +175,10 @@ form button:active {
     margin-top: 20px;
   }
 
+  fieldset {
+    margin: 0 0 20px;
+  }
+
   form div,
   div > label,
   div > input, 
@@ -251,7 +255,10 @@ select:-webkit-autofill:focus {
 /* spinner motion based on https://codepen.io/supah/pen/BjYLdW */
 
 
-
+.validationMessage {
+  color:#3a3a3a;
+  margin: -20px 0 0;
+}
 
 
 

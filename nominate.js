@@ -1,5 +1,7 @@
 const $nominationContainer = document.getElementById('nomination');
 const $messageContainer = document.getElementById('nominationMessage');
+const $alreadyNominatedNames = document.getElementById('alreadyNominatedNames');
+const $alreadyNominatedEmails = document.getElementById('alreadyNominatedEmails');
 
 if (typeof Element.prototype.addEventListener === 'undefined') {
   Element.prototype.addEventListener = function (e, callback) {
@@ -77,7 +79,6 @@ function sendData(form, data) {
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        // Success
         showMessage(successMessage);
       } else if (xhr.status === 400)  {
         showMessage(alreadyNominatedMessage(data.name, true));
@@ -127,3 +128,26 @@ function alreadyNominatedMessage(name, withHeader) {
   const paragraph = `<p>${name} is a popular choice and they have already been nominated! Why not nominate someone else?</p>`;
   return withHeader ? `${header + paragraph}` : paragraph;
 }
+
+
+let nomineeNames = [];
+let nomineeEmails = [];
+
+const xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    const response = JSON.parse(this.responseText);
+    nomineeNames = response.map(nominee => nominee.name);
+    nomineeEmails = response.map(nominee => nominee.email);
+  }
+};
+xmlhttp.open("GET", "https://us-central1-stashed-online.cloudfunctions.net/vote", true);
+xmlhttp.send();
+
+document.getElementById('name').addEventListener('blur', function() {
+  $alreadyNominatedNames.innerHTML = nomineeNames.includes(this.value) ? alreadyNominatedMessage(this.value) : '';
+})
+
+document.getElementById('email').addEventListener('blur', function() {
+  $alreadyNominatedEmails.innerHTML = nomineeEmails.includes(this.value) ? alreadyNominatedMessage(this.value) : '';
+})
