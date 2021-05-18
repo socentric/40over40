@@ -85,7 +85,6 @@ function sendData(form, data) {
         // Error
         showMessage(errorMessage);
       }
-      document.querySelectorAll('a')[0].focus();
     }
   }
   xhr.open(form.method, form.action, true);
@@ -100,6 +99,7 @@ function showMessage(message) {
   $nominationContainer.style.display = 'none';
   $messageContainer.style.display = 'block';
   $messageContainer.innerHTML = message;
+  document.querySelectorAll('a')[0].focus();
 }
 
 const loadingMessage = `
