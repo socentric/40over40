@@ -84,7 +84,6 @@ div > .select-container {
 }
 
 div.select-has-value {
-  background: #fff;
   border: solid 1px #3a3a3a;
 }
 
@@ -93,7 +92,6 @@ div.select-has-value select {
 }
 
 .input-has-value input {
-  background: #fff;
   color: #3a3a3a !important;
   border: solid 1px #3a3a3a;
 }
