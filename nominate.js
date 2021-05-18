@@ -47,9 +47,28 @@ const submitNomination = function(event) {
     data[entry[0]] = entry[1];
   }
 
+  const myfile = form['picture'].files[0];
+  const fileName = myfile.name;
 
-  sendData(form, data);
+  getBase64( myfile, function( result ) {
+    data.picture = {
+      name: fileName,
+      file: btoa(result)
+    };
+    sendData(form, data);
+  });
 }
+
+function getBase64(file, cb) {
+  var reader = new FileReader();
+  reader.readAsBinaryString(file);
+  reader.onload = function () {
+    cb(reader.result);
+  };
+  reader.onerror = function (error) {
+    console.log('Error: ', error);
+  };
+} 
 
 function sendData(form, data) {
   var xhr = new XMLHttpRequest();
