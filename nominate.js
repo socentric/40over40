@@ -152,7 +152,9 @@ document.getElementById('email').addEventListener('blur', function() {
   $alreadyNominatedEmails.innerHTML = nomineeEmails.includes(this.value) ? alreadyNominatedMessage(this.value) : '';
 })
 
-document.getElementById('reason').addEventListener('keyup', function() {
-  const availableXers = this.value.length;
-  document.getElementById('count').innerHTML = `${availableXers} / 700`
-});
+document.getElementById('reason').addEventListener('keyup', displayXerCount);
+document.getElementById('reason').addEventListener('paste', displayXerCount);
+
+function displayXerCount() {
+  document.getElementById('count').innerHTML = `${this.value.length} / 700`;
+}
