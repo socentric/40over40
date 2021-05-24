@@ -18,6 +18,14 @@
   <link rel="stylesheet" type="text/css" href="index.css" media="screen"/>
   <link rel="stylesheet" type="text/css" href="form.css" media="screen"/>
   <link rel="stylesheet" type="text/css" href="nominate.css" media="screen"/>
+  <style>
+    fieldset {
+      display: block;
+    }
+    fieldset > div {
+      width: 55%;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -52,9 +60,7 @@
             <input id="password" type="password" required/>
           </div>
         </fieldset>
-        <button>
-          <span>Submit 2021 Nomination</span>
-        </button>
+        <button class="button">LOGIN</button>
       </form>
     </section>
     <section id="nominationMessage"></section>
