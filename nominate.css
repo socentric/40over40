@@ -34,4 +34,9 @@
  .admin #adminActionsContainer {
    display: block;
  }
+
+ #adminActionsContainer .button {
+  position: relative;
+  top: 25px;
+ }
  

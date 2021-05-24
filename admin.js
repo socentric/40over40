@@ -128,7 +128,25 @@ function getVotes() {
 
 $statusButton.addEventListener('click', function (event) {
   event.preventDefault();
-  alert(this.value);
+  const formData = new FormData();
+  Object.keys(nominee).map((key) => formData.append(key, nominee[key]));
+  if(!nominee.published) {
+    formData.append('published', 'true');
+  }
+
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        document.location.reload();
+      } else {
+        // Error
+        alert('error');
+      }
+    }
+  }
+  xhr.open('PUT', 'https://us-central1-stashed-online.cloudfunctions.net/nominate', true);
+  xhr.send(formData);
 });
 
 $editButton.addEventListener('click', function (event) {

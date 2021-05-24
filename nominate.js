@@ -137,7 +137,30 @@ document.getElementById('cancelButton').addEventListener('click', (event) => {
 });
 
 document.getElementById('updateButton').addEventListener('click', (event) => {
-  clearAdmin(event);
+  event.preventDefault();
+  const $form = document.getElementById('nominateForm')
+  const formData = new FormData($form);
+  const nominee = JSON.parse(storedNominee);
+
+  if(!nominee.published) {
+    formData.append('published', 'true');
+  }
+
+  formData.append('pictureUrl', nominee.pictureUrl);
+
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        clearAdmin(event);
+      } else {
+        // Error
+        alert('error');
+      }
+    }
+  }
+  xhr.open('PUT', 'https://us-central1-stashed-online.cloudfunctions.net/nominate', true);
+  xhr.send(formData);
 });
 
 function clearAdmin(event) {
