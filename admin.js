@@ -144,13 +144,13 @@ $deleteButton.addEventListener('click', function (event) {
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        alert('success')
+        document.location.href = 'nominees.html';
       } else {
         // Error
-        alert('error');
+        console.log('error');
       }
     }
   }
-  xhr.open('DELETE', `${url}?email=${nominee.email}`, true);
+  xhr.open('DELETE', `${nominateUrl}?email=${nominee.email}`, true);
   xhr.send();
 });
