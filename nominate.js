@@ -39,63 +39,6 @@ for(let i=0; i<$selects.length; i++) {
   })
 }
 
-function submitNomination(event) {
-  event.preventDefault();
-
-  const form = event.target;
-  const data = {};
-
-  for (es = new FormData(form).entries(); !(e = es.next()).done && (entry = e.value);) {
-    data[entry[0]] = entry[1];
-  }
-
-  const myfile = form['picture'].files[0];
-  const fileName = myfile.name;
-
-  getBase64( myfile, function( result ) {
-    data.picture = {
-      name: fileName,
-      file: btoa(result)
-    };
-    sendData(form, data);
-  });
-}
-
-function getBase64(file, cb) {
-  var reader = new FileReader();
-  reader.readAsBinaryString(file);
-  reader.onload = function () {
-    cb(reader.result);
-  };
-  reader.onerror = function (error) {
-    console.log('Error: ', error);
-  };
-} 
-
-function sendData(form, data) {
-  showMessage(loadingMessage);
-
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        showMessage(successMessage);
-      } else if (xhr.status === 400)  {
-        showMessage(alreadyNominatedMessage(data.name, true));
-      } else {
-        // Error
-        showMessage(errorMessage);
-      }
-    }
-  }
-  xhr.open(form.method, form.action, true);
-  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  xhr.send(JSON.stringify(data));
-  xhr.onloadend = function () {
-    // done
-  };
-}
-
 function showMessage(message) {
   $nominationContainer.style.display = 'none';
   $messageContainer.style.display = 'block';
@@ -132,6 +75,7 @@ function alreadyNominatedMessage(name, withHeader) {
 
 let nomineeNames = [];
 let nomineeEmails = [];
+
 
 const xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
@@ -204,3 +148,31 @@ function clearAdmin(event) {
   window.localStorage.removeItem('forwardingUrl');
   document.location.href = storedForwardingUrl; 
 }
+
+document.getElementById('nominateForm').addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const form = event.target;
+  const formData = new FormData(form);
+
+  showMessage(loadingMessage);
+
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        showMessage(successMessage);
+      } else if (xhr.status === 400)  {
+        showMessage(alreadyNominatedMessage(data.name, true));
+      } else {
+        // Error
+        showMessage(errorMessage);
+      }
+    }
+  }
+  xhr.open('POST', 'https://us-central1-stashed-online.cloudfunctions.net/nominate', true);
+  xhr.send(formData);
+  xhr.onloadend = function () {
+    // done
+  };
+})
