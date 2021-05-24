@@ -145,7 +145,7 @@ input[type="checkbox"] {
   height: 16px;
 }
 
-form button {
+.button {
   -webkit-font-smoothing: antialiased;
   background-color: #000;
   border: 0px;
@@ -159,7 +159,6 @@ form button {
   text-decoration: none;
   text-transform: uppercase;
   transition: all 150ms ease-in-out 0s;
-  width: 99%;
 }
 
 form button span {
@@ -208,6 +207,10 @@ form button:active {
     top: 0;
     right: 0;
     font-size: 13px;
+  }
+
+  .button {
+    
   }
 }
 

@@ -1,0 +1,88 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="robots" content="noindex"/>
+  <meta property="og:title" content="Nominate | 40 over Forty"/>
+  <meta property="og:url" content="https://www.40overforty.com"/>
+  <meta property="og:site_name" content="40 over Forty"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Nominate | 40 over Forty"/>
+  <link rel="canonical" href="https://www.40overforty.com"/>
+
+  <title>Login | 40 over Forty</title>
+  <link rel="stylesheet" type="text/css" href="index.css" media="screen"/>
+  <link rel="stylesheet" type="text/css" href="form.css" media="screen"/>
+  <link rel="stylesheet" type="text/css" href="nominate.css" media="screen"/>
+</head>
+<body>
+  <header>
+    <section>
+      <nav class="mobile-nav">
+        <button id="toggleMenu" class="menu-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" id="menu" width="34" height="34">
+            <path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path>
+          </svg>
+          <span>x</span>
+        </button>
+      </nav>
+      <nav class="web-nav">
+        <a href="index.html">About</a>
+        <a href="nominate.html">Nominate</a>
+        <a href="nominees.html">2021 Nominees</a>
+        <a href="founders.html">Founders</a>
+      </nav>
+    </section>
+  </header>
+  <main>
+    <section id="nomination">
+      <h1>Login</h1>
+      <form action="nominees.html?admin" onsubmit="login(event);" id="loginForm">
+        <fieldset>
+          <div>
+            <label for="username">Username</label>
+            <input id="username" type="text" required/>
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input id="password" type="password" required/>
+          </div>
+        </fieldset>
+        <button>
+          <span>Submit 2021 Nomination</span>
+        </button>
+      </form>
+    </section>
+    <section id="nominationMessage"></section>
+  </main>
+  <footer>
+    <section>
+      <nav>
+        <a href="privacy.html" class="privacy">
+          Privacy
+        </a>
+        <a href="https://twitter.com/40overforty" target="_blank"> 
+          <img src="images/twitter.gif" alt="Twitter - 40overforty" />
+        </a>
+        <a href="https://www.instagram.com/40overfortyww/" target="_blank">
+          <img src="images/instagram.gif" alt="Instagram - 40overfortyww" />
+        </a>
+        <a href="https://www.linkedin.com/company/31432343/admin/" target="_blank">
+          <img src="images/linkedIn.gif" alt="Linkedin" />
+        </a>
+        <a href="mailto:hello@40overforty.com?subject=HELLO%2040%20OVER%20FORTY!" id="env" title="hello@40overforty.com" target="_self">
+          <img src="images/envelope.gif" alt="" />
+        </a>
+      </nav>
+    </section>
+  </footer>
+
+  <script src="index.js"></script>
+  <script src="login.js"></script>
+</body>
+  
+</html>

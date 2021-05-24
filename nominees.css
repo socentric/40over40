@@ -22,6 +22,10 @@ main nav p {
   margin: 8px 0 10px;
 }
 
+#thumbnailContainer h2 {
+  width: 100%;
+}
+
 #thumbnailContainer div {
   width: 280px;
   height: 280px;
@@ -41,14 +45,19 @@ main nav p {
   border: solid 1px #fff;
 }
 
+div.with-picture {
+  background-image: url('assets/pic1.jpg');
+  background-color: #fff;
+}
+
 #detailContainer div .content {
   width: 380px;
   padding: 0 20px;
-  height: 610px;
+  height: 620px;
   background: #fff;
   position: absolute;
   right: 0;
-  top: 40px;
+  top: 75px;
   color: #000;
   font-size: 18px;
 }
@@ -117,6 +126,7 @@ main nav p {
   }
 
   #thumbnailContainer {
+    padding-left: 45px;
     text-align: center;
   }
 
@@ -141,7 +151,7 @@ main nav p {
     position: static;
     height: auto;
     z-index: 1;
-    padding: 5px 10px;
+    padding: 5px 12px;
     width: 100%;
     box-sizing: border-box;
   }
@@ -185,4 +195,8 @@ main nav p {
   .pre-nominations p { 
     font-size: 12px;
   }
+}
+
+#adminActionsContainer {
+  display: none;
 }

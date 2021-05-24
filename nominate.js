@@ -154,7 +154,54 @@ document.getElementById('email').addEventListener('blur', function() {
 
 document.getElementById('reason').addEventListener('keyup', displayXerCount);
 document.getElementById('reason').addEventListener('paste', displayXerCount);
+document.getElementById('reason').addEventListener('focus', displayXerCount);
 
 function displayXerCount() {
   document.getElementById('count').innerHTML = `${this.value.length} / 700`;
+}
+
+
+const storedNominee = window.localStorage.getItem('nominee');
+const storedForwardingUrl = window.localStorage.getItem('forwardingUrl');
+
+if(storedNominee && storedForwardingUrl) {
+  document.body.className = 'admin';
+
+  const nominee = JSON.parse(storedNominee);
+  Object.keys(nominee).forEach(key => {
+    const $input = document.getElementById(key);
+    if($input && !key.includes('picture')) {
+      $input.value = nominee[key];
+    }
+  });
+  document.getElementById('nominatorName').value = nominee.nominator;
+  document.getElementById('nominatorEmail').value = nominee.nominator;
+
+  for(let i=0; i<$inputs.length; i++) {
+    if($inputs[i].type !== 'checkbox') {
+      const $parent = $inputs[i].offsetParent;
+      $parent.classList.add('input-has-value');
+    }
+  }
+
+  for(let i=0; i<$selects.length; i++) {
+      const $parent = $selects[i].offsetParent;
+      $parent.classList.add('select-has-value');
+  }
+}
+
+document.getElementById('cancelButton').addEventListener('click', (event) => {
+  clearAdmin(event);
+});
+
+document.getElementById('updateButton').addEventListener('click', (event) => {
+  alert('save changes');
+  clearAdmin(event);
+});
+
+function clearAdmin(event) {
+  event.preventDefault();
+  window.localStorage.removeItem('nominee');
+  window.localStorage.removeItem('forwardingUrl');
+  document.location.href = storedForwardingUrl; 
 }

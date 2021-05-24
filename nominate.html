@@ -54,7 +54,7 @@
             <input id="nominatorEmail" name="nominatorEmail" type="email" required/>
           </div>
           <input id="over40" name="over40" type="checkbox" required/>
-          <label>I confirm my nominee is over 40 years old.</label>
+          <label id="over40Label">I confirm my nominee is over 40 years old.</label>
         </fieldset>
 
         <h2>Nominee details:</h2>
@@ -357,10 +357,10 @@
           </div>
         </fieldset>
 
-        <p>Upload a portrait picture no bigger than <b>350k</b> and in one of the following file formats: gif, jpeg, png.</p>
+        <p>Upload a portrait picture no bigger than <b>350k</b> and in one of the following file formats: gif, jpeg, png or email us separately and we can optimise for you.</p>
         <fieldset>
           <div class="full-width">
-            <input id="picture" name="picture" type="file" accept="image/gif, image/jpeg, image/png" required>
+            <input id="picture" name="picture" type="file" accept="image/gif, image/jpeg, image/png">
           </div>
         </fieldset>
 
@@ -371,12 +371,16 @@
           </div>
         </fieldset>
 
-        <button>
+        <button id="submitNomination" class="button">
           <span>Submit 2021 Nomination</span>
         </button>
       </form>
     </section>
     <section id="nominationMessage"></section>
+    <section id="adminActionsContainer">
+      <button id="cancelButton" class="button">Cancel</button>
+      <button id="updateButton" class="button">Update</button>
+    </section>
   </main>
   <footer>
     <section>

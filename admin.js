@@ -1,26 +1,19 @@
-setLog();
-
-const xmlhttp = new XMLHttpRequest();
+const url = 'https://us-central1-stashed-online.cloudfunctions.net/vote';
+const nominateUrl = 'https://us-central1-stashed-online.cloudfunctions.net/nominate';
 let nominees = [];
+let nominee = {};
 
+const $adminActionsContainer = document.getElementById('adminActionsContainer');
 const $thumbnailContainer = document.getElementById('thumbnailContainer');
 const $detailContainer = document.getElementById('detailContainer');
+const $statusButton = document.getElementById('statusButton');
+const $editButton = document.getElementById('editButton');
+const $deleteButton = document.getElementById('deleteButton');
 
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    let json = JSON.parse(this.responseText);
-    var sortedNominations = sortByName(json);   
-    nominees = sortedNominations.filter(nominee => nominee.published);
-    if(nominees.length > 0) {
-      renderThumbnailContainer(nominees);
-    }
-  }
-};
-xmlhttp.open("GET", "https://us-central1-stashed-online.cloudfunctions.net/vote", true);
-// xmlhttp.send();
+getVotes();
 
-const renderThumbnailContainer = (nominees) => {
-  $thumbnailContainer.innerHTML = '';
+const renderThumbnailContainer = (nominees, heading) => {
+  $thumbnailContainer.insertAdjacentHTML('beforeend', `<h2>${heading}</h2>`);
   nominees.map((nomination) => {
     const fragment = renderThumbnail(nomination);
     $thumbnailContainer.insertAdjacentHTML('beforeend', fragment);
@@ -44,7 +37,7 @@ const renderDetail = (nominee) => {
   const inlineStyle = pictureUrl ? `background-image: url('${pictureUrl}')` : ``;
   const description = reason.split('\r\n\r\n').reduce((prevValue, value) => {
     return `${prevValue}<p>${value}</p>`;
-  }, ``)
+  }, ``);
 
   return `
     <div style="${inlineStyle}" title="${name}" class="with-picture">
@@ -66,6 +59,7 @@ const renderDetail = (nominee) => {
 }
 
 const hideViews = () => {
+  $adminActionsContainer.style.display = 'none';
   $thumbnailContainer.style.display = 'none';
   $detailContainer.style.display = 'none';
   $detailContainer.innerHTML = '';
@@ -78,11 +72,15 @@ const showViews = () => {
   const nomineeName = hash.replace('#', '');
 
   if(nomineeName && nominees.length > 0) {
-    const nominee = nominees.filter(nominee => {
+    nominee = nominees.filter(nominee => {
       return nominee.name.includes(nomineeName);
     })[0];
-    const fragment = renderDetail(nominee, `assets/pic1.jpg`);
+    const fragment = renderDetail(nominee);
 
+    statusButton.innerText = nominee.published ? 'Archive' : 'Publish';
+    statusButton.value = nominee.published ? 'archive' : 'publish';
+
+    $adminActionsContainer.style.display = 'block';
     $detailContainer.style.display = 'block';
     $detailContainer.insertAdjacentHTML('beforeend', fragment);
   } else if (nomineeName) {
@@ -103,10 +101,58 @@ function sortByName(json) {
 
     if (fa < fb) {
         return -1;
-    } 
+    }
     if (fa > fb) {
         return 1;
     }
     return 0;
   });
 }
+
+function getVotes() {
+  const xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      let json = JSON.parse(this.responseText);
+      var sortedNominations = sortByName(json);   
+      const unpublishedNominees = sortedNominations.filter(nominee => !nominee.published);
+      const publishedNominees = sortedNominations.filter(nominee => nominee.published);
+      renderThumbnailContainer(unpublishedNominees, 'Unpublished:');
+      renderThumbnailContainer(publishedNominees, 'Published:');
+      nominees = unpublishedNominees.concat(publishedNominees);
+    }
+  };
+  xmlhttp.open('GET', url, true);
+  xmlhttp.send();
+}
+
+$statusButton.addEventListener('click', function (event) {
+  event.preventDefault();
+  alert(this.value);
+});
+
+$editButton.addEventListener('click', function (event) {
+  event.preventDefault();
+  window.localStorage.setItem('forwardingUrl', document.location.href);
+  window.localStorage.setItem('nominee', JSON.stringify(nominee));
+  document.location.href = 'nominate.html';
+});
+
+$deleteButton.addEventListener('click', function (event) {
+  event.preventDefault();
+
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        alert('success')
+      } else {
+        // Error
+        alert('error');
+      }
+    }
+  }
+  xhr.open('DELETE', `${nominateUrl}?email=${nominee.email}`, true);
+  xhr.send();
+  alert(`delete ${nominee.email}`);
+});
