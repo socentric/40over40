@@ -118,8 +118,6 @@ if(storedNominee && storedForwardingUrl) {
       $input.value = nominee[key];
     }
   });
-  document.getElementById('nominatorName').value = nominee.nominator;
-  document.getElementById('nominatorEmail').value = nominee.nominator;
 
   for(let i=0; i<$inputs.length; i++) {
     if($inputs[i].type !== 'checkbox') {
