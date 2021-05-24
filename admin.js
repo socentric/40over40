@@ -1,4 +1,4 @@
-const url = 'https://us-central1-stashed-online.cloudfunctions.net/vote';
+const voteUrl = 'https://us-central1-stashed-online.cloudfunctions.net/vote';
 const nominateUrl = 'https://us-central1-stashed-online.cloudfunctions.net/nominate';
 let nominees = [];
 let nominee = {};
@@ -122,7 +122,7 @@ function getVotes() {
       nominees = unpublishedNominees.concat(publishedNominees);
     }
   };
-  xmlhttp.open('GET', url, true);
+  xmlhttp.open('GET', voteUrl, true);
   xmlhttp.send();
 }
 
@@ -140,7 +140,6 @@ $editButton.addEventListener('click', function (event) {
 
 $deleteButton.addEventListener('click', function (event) {
   event.preventDefault();
-
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
@@ -152,7 +151,6 @@ $deleteButton.addEventListener('click', function (event) {
       }
     }
   }
-  xhr.open('DELETE', `${nominateUrl}?email=${nominee.email}`, true);
+  xhr.open('DELETE', `${url}?email=${nominee.email}`, true);
   xhr.send();
-  alert(`delete ${nominee.email}`);
 });

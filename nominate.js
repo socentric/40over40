@@ -195,7 +195,6 @@ document.getElementById('cancelButton').addEventListener('click', (event) => {
 });
 
 document.getElementById('updateButton').addEventListener('click', (event) => {
-  alert('save changes');
   clearAdmin(event);
 });
 

@@ -27,8 +27,8 @@
  }
  #adminActionsContainer,
  .admin #submitNomination,
- #over40,
- #over40Label {
+ .admin #over40,
+ .admin #over40Label {
   display: none;
  }
  .admin #adminActionsContainer {
