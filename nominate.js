@@ -119,7 +119,7 @@ if(storedNominee && storedForwardingUrl) {
     }
   });
 
-  if(!nominee.nominatorEmail) {
+  if(!nominee.nominatorEmail && nominee.nominator) {
     document.getElementById('nominatorEmail').value = nominee.nominator;
   }
 
