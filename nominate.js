@@ -181,7 +181,7 @@ document.getElementById('updateButton').addEventListener('click', (event) => {
   const formData = new FormData($form);
   const nominee = JSON.parse(storedNominee);
 
-  if(nominee.pictureUrl !== "" && nominee.pictureUrl !== "https://storage.googleapis.com/stashed-online.appspot.com/40over40/") {
+  if(nominee.pictureUrl !== "" && nominee.pictureUrl !== "undefined" && nominee.pictureUrl !== "https://storage.googleapis.com/stashed-online.appspot.com/40over40/") {
     formData.append('pictureUrl', nominee.pictureUrl);
     formData.delete('picture');
   }
