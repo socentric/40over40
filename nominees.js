@@ -31,7 +31,7 @@ const renderThumbnail = (nomination) => {
   const {name, pictureUrl} = nomination;
   const inlineStyle = pictureUrl ? `background-image: url('${pictureUrl}')` : ``;
   return `
-    <a href="#${name.replace(' ', '_')}">
+    <a href="#${name.replace(' ', '_').trim()}">
       <div style="${inlineStyle}" title="View ${name}" class="with-picture"></div>
       <p>${name}</p>
     </a>

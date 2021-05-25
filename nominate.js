@@ -119,6 +119,10 @@ if(storedNominee && storedForwardingUrl) {
     }
   });
 
+  if(!nominee.nominatorEmail) {
+    document.getElementById('nominatorEmail').value = nominee.nominator;
+  }
+
   for(let i=0; i<$inputs.length; i++) {
     if($inputs[i].type !== 'checkbox') {
       const $parent = $inputs[i].offsetParent;
@@ -176,7 +180,7 @@ document.getElementById('updateButton').addEventListener('click', (event) => {
   const $form = document.getElementById('nominateForm')
   const formData = new FormData($form);
   const nominee = JSON.parse(storedNominee);
-debugger;
+
   if(nominee.pictureUrl !== "" && nominee.pictureUrl !== "https://storage.googleapis.com/stashed-online.appspot.com/40over40/") {
     formData.append('pictureUrl', nominee.pictureUrl);
     formData.delete('picture');
