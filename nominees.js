@@ -10,7 +10,7 @@ xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
     let json = JSON.parse(this.responseText);
     var sortedNominations = sortByName(json);   
-    nominees = sortedNominations.filter(nominee => nominee.publish);
+    nominees = sortedNominations.filter(nominee => nominee.publish === 'true');
     if(nominees.length > 0) {
       renderThumbnailContainer(nominees);
     }
@@ -79,9 +79,9 @@ const showViews = () => {
 
   if(nomineeName && nominees.length > 0) {
     const nominee = nominees.filter(nominee => {
-      return nominee.name.includes(nomineeName);
+      return nominee.name.trim() === nomineeName.trim();
     })[0];
-    const fragment = renderDetail(nominee, `assets/pic1.jpg`);
+    const fragment = renderDetail(nominee);
 
     $detailContainer.style.display = 'block';
     $detailContainer.insertAdjacentHTML('beforeend', fragment);

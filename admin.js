@@ -73,7 +73,7 @@ const showViews = () => {
 
   if(nomineeName && nominees.length > 0) {
     nominee = nominees.filter(nominee => {
-      return nominee.name.includes(nomineeName);
+      return nominee.name.trim() === nomineeName.trim();
     })[0];
     const fragment = renderDetail(nominee);
 
