@@ -10,7 +10,7 @@ xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
     let json = JSON.parse(this.responseText);
     var sortedNominations = sortByName(json);   
-    nominees = sortedNominations.filter(nominee => nominee.published);
+    nominees = sortedNominations.filter(nominee => nominee.publish);
     if(nominees.length > 0) {
       renderThumbnailContainer(nominees);
     }

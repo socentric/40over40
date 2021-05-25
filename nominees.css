@@ -200,3 +200,8 @@ div.with-picture {
 #adminActionsContainer {
   display: none;
 }
+
+h2.published {
+  padding-top:40px; 
+  border-top: solid 2px #fff;
+}

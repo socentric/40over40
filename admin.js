@@ -13,7 +13,7 @@ const $deleteButton = document.getElementById('deleteButton');
 getVotes();
 
 const renderThumbnailContainer = (nominees, heading) => {
-  $thumbnailContainer.insertAdjacentHTML('beforeend', `<h2>${heading}</h2>`);
+  $thumbnailContainer.insertAdjacentHTML('beforeend', `<h2 class="${heading.toLowerCase()}">${heading}:</h2>`);
   nominees.map((nomination) => {
     const fragment = renderThumbnail(nomination);
     $thumbnailContainer.insertAdjacentHTML('beforeend', fragment);
@@ -77,8 +77,8 @@ const showViews = () => {
     })[0];
     const fragment = renderDetail(nominee);
 
-    statusButton.innerText = nominee.published ? 'Archive' : 'Publish';
-    statusButton.value = nominee.published ? 'archive' : 'publish';
+    statusButton.innerText = nominee.publish == 'true' ? 'Archive' : 'Publish';
+    statusButton.value = nominee.publish === 'true' ? 'archive' : 'publish';
 
     $adminActionsContainer.style.display = 'block';
     $detailContainer.style.display = 'block';
@@ -115,10 +115,10 @@ function getVotes() {
     if (this.readyState == 4 && this.status == 200) {
       let json = JSON.parse(this.responseText);
       var sortedNominations = sortByName(json);   
-      const unpublishedNominees = sortedNominations.filter(nominee => !nominee.published);
-      const publishedNominees = sortedNominations.filter(nominee => nominee.published);
-      renderThumbnailContainer(unpublishedNominees, 'Unpublished:');
-      renderThumbnailContainer(publishedNominees, 'Published:');
+      const unpublishedNominees = sortedNominations.filter(nominee => !nominee.publish || nominee.publish === 'false');
+      const publishedNominees = sortedNominations.filter(nominee => nominee.publish === 'true');
+      renderThumbnailContainer(unpublishedNominees, 'Unpublished');
+      renderThumbnailContainer(publishedNominees, 'Published');
       nominees = unpublishedNominees.concat(publishedNominees);
     }
   };
@@ -130,9 +130,9 @@ $statusButton.addEventListener('click', function (event) {
   event.preventDefault();
   const formData = new FormData();
   Object.keys(nominee).map((key) => formData.append(key, nominee[key]));
-  if(!nominee.published) {
-    formData.append('published', 'true');
-  }
+
+  const value = nominee.publish === 'true' ? 'false' : 'true';
+  formData.append('publish', value);
 
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
