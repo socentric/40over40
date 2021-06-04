@@ -58,7 +58,7 @@ const loadingMessage = `
 
 const successMessage = `
   <h1>Thank you for making your nomination</h1>
-  <p>Your nomination is being reviewed by our 40 Over Forty team and will be uploaded once verified. We will be in touch if we require any further information.</p>
+  <p>Nominations will be gathered and added to the website at the end of each month. If we require any futher information we will be in touch.</p>
 `;
 
 const errorMessage = `
