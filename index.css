@@ -88,7 +88,7 @@ main nav {
   margin: 40px 0 0;
 }
 main nav a {
-  margin: 5px 10px 5px 0;
+  margin: 5px 10px 3px 0;
 }
 
 main nav img {
@@ -230,6 +230,10 @@ footer nav a:first-child {
 
   main nav {
     margin: 15px 0 0;
+  }
+
+  main nav a {
+    margin: 5px 5px 0px 0;
   }
 
   main nav img {
