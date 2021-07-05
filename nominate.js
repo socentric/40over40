@@ -180,7 +180,6 @@ document.getElementById('updateButton').addEventListener('click', (event) => {
   const $form = document.getElementById('nominateForm');
   const formData = new FormData($form);
   const nominee = JSON.parse(storedNominee);
-debugger;
   
   const $pictureInput = document.getElementById('picture');
   if(!$pictureInput.files[0]) {
