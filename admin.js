@@ -68,7 +68,7 @@ const hideViews = () => {
 const showViews = () => {
   hideViews();
 
-  const hash = window.location.hash.replace(/_/g,' ');
+  const hash = decodeURI(window.location.hash).replace(/_/g,' ');
   const nomineeName = hash.replace('#', '');
 
   if(nomineeName && nominees.length > 0) {
