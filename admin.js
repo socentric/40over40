@@ -24,7 +24,7 @@ const renderThumbnail = (nomination) => {
   const {name, pictureUrl} = nomination;
   const inlineStyle = pictureUrl ? `background-image: url('${pictureUrl}')` : ``;
   return `
-    <a href="#${name.replace(' ', '_').trim()}">
+    <a href="#${name.replace(/\s/g,'_').trim()}">
       <div style="${inlineStyle}" title="View ${name}" class="with-picture"></div>
       <p>${name}</p>
     </a>
@@ -68,7 +68,7 @@ const hideViews = () => {
 const showViews = () => {
   hideViews();
 
-  const hash = window.location.hash.replace('_', ' ');
+  const hash = window.location.hash.replace(/_/g,' ');
   const nomineeName = hash.replace('#', '');
 
   if(nomineeName && nominees.length > 0) {

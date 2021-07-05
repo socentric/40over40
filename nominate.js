@@ -177,11 +177,13 @@ document.getElementById('nominateForm').addEventListener('submit', (event) => {
 
 document.getElementById('updateButton').addEventListener('click', (event) => {
   event.preventDefault();
-  const $form = document.getElementById('nominateForm')
+  const $form = document.getElementById('nominateForm');
   const formData = new FormData($form);
   const nominee = JSON.parse(storedNominee);
-
-  if(nominee.pictureUrl !== "" && nominee.pictureUrl !== "undefined" && nominee.pictureUrl !== "https://storage.googleapis.com/stashed-online.appspot.com/40over40/") {
+debugger;
+  
+  const $pictureInput = document.getElementById('picture');
+  if(!$pictureInput.files[0]) {
     formData.append('pictureUrl', nominee.pictureUrl);
     formData.delete('picture');
   }
