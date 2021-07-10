@@ -92,13 +92,8 @@ div.with-picture {
 
 .back-to-nominees {
   display: inline-block;
-  margin: 50% 0 0 3px;
-  opacity: .7;
+  margin: 50% 0 0 -45px;
 }
-
-.back-to-nominees:hover {
-  opacity: 1;
-} 
 
 .pre-nominations {
   width: 620px !important; 
@@ -204,6 +199,16 @@ div.with-picture {
     position: relative;
     left: -25px;
   }
+
+  .back-to-nominees {
+    display: inline-block;
+    margin: 50% 0 0 3px;
+    opacity: .7;
+  }
+  
+  .back-to-nominees:hover {
+    opacity: 1;
+  } 
 }
 
 #adminActionsContainer {
