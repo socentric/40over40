@@ -17,6 +17,7 @@
   <title>2021 NOMINEES | 40 over Forty</title>
   <link rel="stylesheet" type="text/css" href="index.css" media="screen"/>
   <link rel="stylesheet" type="text/css" href="nominees.css" media="screen"/>
+  <link rel="stylesheet" type="text/css" href="spinner.css" media="screen"/>
 </head>
 <body>
   <header>
@@ -40,10 +41,12 @@
   <main>
     <section>
       <nav id="thumbnailContainer">
-        <div class="pre-nominations">
-          <h1>Nominations LIVE here soon!</h1>
-          <p>We're looking forward to seeing the amazing variety of talented 40+ people from the marketing, media and advertising industry being nominated for their achievements.</p>
-          <p>Keep an eye on this page as we'll be gathering the nominations and adding them here each month.</p>
+        <div class="loading">
+          <svg viewBox="0 0 50 50" class="spinner">
+            <circle class="ring" cx="25" cy="25" r="22.5" />
+            <circle class="line" cx="25" cy="25" r="22.5" />
+          </svg>
+          <h2>Loading 2021 Nominees...</h2>
         </div>
       </nav>
       <div id="detailContainer"></div>
