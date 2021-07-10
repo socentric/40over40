@@ -76,7 +76,7 @@ div.with-picture {
 #detailContainer nav {
   position: absolute;
   bottom: 15px;
-  padding: 0;
+  padding: 01px;
 }
 
 #detailContainer nav img {
@@ -92,8 +92,13 @@ div.with-picture {
 
 .back-to-nominees {
   display: inline-block;
-  margin: 50% 0 0 -55px;
+  margin: 50% 0 0 3px;
+  opacity: .7;
 }
+
+.back-to-nominees:hover {
+  opacity: 1;
+} 
 
 .pre-nominations {
   width: 620px !important; 
@@ -104,7 +109,6 @@ div.with-picture {
 .pre-nominations p { 
   font-size: 16px;
 }
-
 
 
 @media only screen and (max-width: 420px) {
