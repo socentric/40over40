@@ -46,7 +46,7 @@ const renderDetail = (nominee) => {
       </a>  
       <div class="content">
         <h2>${name}</h2>
-        <h3>${jobTitle} at ${company}</h3>
+        <h3>${jobTitle}${company.toLowerCase() === 'freelance' ? `,` : ` at`} ${company}</h3>
         ${description}
         <nav>
           <a class="linkedin" href="${linkedIn}" target="_blank">
