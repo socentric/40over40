@@ -44,7 +44,7 @@ const renderDetail = (nominee) => {
   const inlineStyle = pictureUrl ? `background-image: url('${pictureUrl}')` : ``;
   const description = reason.split('\r\n\r\n').reduce((prevValue, value) => {
     return `${prevValue}<p>${value}</p>`;
-  }, ``)
+  }, ``);
 
   return `
     <div style="${inlineStyle}" title="${name}" class="with-picture">
@@ -53,7 +53,7 @@ const renderDetail = (nominee) => {
       </a>  
       <div class="content">
         <h2>${name}</h2>
-        <h3>${jobTitle} at ${company}</h3>
+        <h3>${jobTitle}${company.toLowerCase() === 'freelance' ? `,` : ` at`} ${company}</h3>
         ${description}
         <nav>
           <a class="linkedin" href="${linkedIn}" target="_blank">
