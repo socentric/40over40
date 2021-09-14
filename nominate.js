@@ -201,3 +201,7 @@ document.getElementById('updateButton').addEventListener('click', (event) => {
   xhr.open('PUT', 'https://us-central1-stashed-online.cloudfunctions.net/nominate', true);
   xhr.send(formData);
 });
+
+if (document.location.href.includes('admin')) {
+  document.getElementById('nominateForm').style.display = 'block';
+} 
