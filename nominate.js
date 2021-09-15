@@ -126,13 +126,13 @@ if(storedNominee && storedForwardingUrl) {
   for(let i=0; i<$inputs.length; i++) {
     if($inputs[i].type !== 'checkbox') {
       const $parent = $inputs[i].offsetParent;
-      $parent.classList.add('input-has-value');
+      $parent && $parent.classList.add('input-has-value');
     }
   }
 
   for(let i=0; i<$selects.length; i++) {
       const $parent = $selects[i].offsetParent;
-      $parent.classList.add('select-has-value');
+      $parent && $parent.classList.add('select-has-value');
   }
 }
 
