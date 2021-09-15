@@ -3,6 +3,10 @@ const $messageContainer = document.getElementById('nominationMessage');
 const $alreadyNominatedNames = document.getElementById('alreadyNominatedNames');
 const $alreadyNominatedEmails = document.getElementById('alreadyNominatedEmails');
 
+if (document.location.href.includes('admin')) {
+  document.getElementById('nominateForm').style.display = 'block';
+}
+
 if (typeof Element.prototype.addEventListener === 'undefined') {
   Element.prototype.addEventListener = function (e, callback) {
     e = 'on' + e;
@@ -200,8 +204,4 @@ document.getElementById('updateButton').addEventListener('click', (event) => {
   }
   xhr.open('PUT', 'https://us-central1-stashed-online.cloudfunctions.net/nominate', true);
   xhr.send(formData);
-});
-
-if (document.location.href.includes('admin')) {
-  document.getElementById('nominateForm').style.display = 'block';
-} 
+}); 
