@@ -37,6 +37,7 @@ const renderThumbnail = (nomination) => {
         <div style="${inlineStyle}" title="View ${name}" class="with-picture"></div>
         <p>${name}</p>
       </a>
+      // ${renderVoteButton(formattedName)}
     </span>
   `;
 }
@@ -62,7 +63,7 @@ const renderDetail = (nominee) => {
         <img src="images/back-arrow.gif" alt="" />
       </a>  
       <div class="content">
-        <h2>${name}</h2>
+        <h2>${name} ${renderVoteButton(formattedName)}</h2>
         <h3>${jobTitle}${company.toLowerCase() === 'freelance' ? `,` : ` at`} ${company}</h3>
         ${description}
         <nav>

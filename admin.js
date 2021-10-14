@@ -193,17 +193,19 @@ const vote = (event) => {
     "name": name
   };
 
+  element.innerText = 'Voted';
+  element.className = 'vote voted'
+
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        alert('success');
-        element.innerText = 'Voted';
-        element.className = 'vote voted'
         window.localStorage.setItem(name, 'true');
       } else {
         // Error
-        alert('error');
+        alert('An error occurred with your vote, please try again');
+        element.innerText = 'Vote';
+        element.className = 'vote';
       }
     }
   }
