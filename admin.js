@@ -189,6 +189,9 @@ const vote = (event) => {
   event.preventDefault;
   const element = event.srcElement;
   const name = element.dataset.name;
+  const payload = {
+    "name": name
+  };
 
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
@@ -205,9 +208,7 @@ const vote = (event) => {
     }
   }
   xhr.open('POST', 'https://us-central1-stashed-online.cloudfunctions.net/votefor', true);
-  xhr.send({
-    "name": name
-  });
+  xhr.send(JSON.stringify(payload));
   xhr.onloadend = function () {
     // done
   };
