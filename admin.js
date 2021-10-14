@@ -189,31 +189,54 @@ const vote = (event) => {
   event.preventDefault;
   const element = event.srcElement;
   const name = element.dataset.name;
-  const payload = {
-    "name": name
+
+  const xhr = new XMLHttpRequest();
+
+  // listen for `load` event
+  xhr.onload = () => {
+      // print JSON response
+      if (xhr.status >= 200 && xhr.status < 300) {
+          // parse JSON
+          const response = JSON.parse(xhr.responseText);
+          console.log(response);
+      }
   };
 
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        alert('success');
-        element.innerText = 'Voted';
-        element.className = 'vote voted'
-        window.localStorage.setItem(name, 'true');
-      } else {
-        // Error
-        alert('error');
-      }
-    }
-  }
-  
-  xhr.open('POST', 'https://us-central1-stashed-online.cloudfunctions.net/votefor', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(JSON.stringify(payload));
-  xhr.onloadend = function () {
-    // done
+  // create a JSON object
+  const json = {
+      "name": "oliver owen"
   };
+
+  // open request
+  xhr.open('POST', 'https://us-central1-stashed-online.cloudfunctions.net/votefor');
+
+  // set `Content-Type` header
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  // send rquest with JSON payload
+  xhr.send(JSON.stringify(json));
+
+  // var xhr = new XMLHttpRequest();
+  // xhr.onreadystatechange = function() {
+  //   if (xhr.readyState === 4) {
+  //     if (xhr.status === 200) {
+  //       alert('success');
+  //       element.innerText = 'Voted';
+  //       element.className = 'vote voted'
+  //       window.localStorage.setItem(name, 'true');
+  //     } else {
+  //       // Error
+  //       alert('error');
+  //     }
+  //   }
+  // }
+  
+  // xhr.open('POST', 'https://us-central1-stashed-online.cloudfunctions.net/votefor', true);
+  // xhr.setRequestHeader('Content-Type', 'application/json');
+  // xhr.send(JSON.stringify(payload));
+  // xhr.onloadend = function () {
+  //   // done
+  // };
 };
 
 const votingOn = (event) => event.srcElement.parentNode.className = 'voting';
