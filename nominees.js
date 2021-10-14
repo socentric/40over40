@@ -30,18 +30,28 @@ const renderThumbnailContainer = (nominees) => {
 const renderThumbnail = (nomination) => {
   const {name, pictureUrl} = nomination;
   const inlineStyle = pictureUrl ? `background-image: url('${pictureUrl}')` : ``;
+  const formattedName = `${name.replace(/\s/g,'_').trim()}`;
   return `
-    <a href="#${name.replace(/\s/g,'_').trim()}">
-      <div style="${inlineStyle}" title="View ${name}" class="with-picture"></div>
-      <p>${name}</p>
-    </a>
+    <span style="position:relative;">
+      <a href="#${formattedName}">
+        <div style="${inlineStyle}" title="View ${name}" class="with-picture"></div>
+        <p>${name}</p>
+      </a>
+    </span>
   `;
+}
+
+const renderVoteButton = (formattedName) => {
+  return !window.localStorage.getItem(formattedName) 
+    ? `<button class="vote" onclick="vote(event);" onmouseover="votingOn(event)" onmouseout="votingOff(event)" data-name="${formattedName}">Vote</button>`
+    : `<button class="vote voted" data-name="${formattedName}">Voted</button>`;
 }
 
 const renderDetail = (nominee) => {
   const {name, company, jobTitle, reason, linkedIn, pictureUrl} = nominee;
   const firstName = name.split(' ')[0];
   const inlineStyle = pictureUrl ? `background-image: url('${pictureUrl}')` : ``;
+  const formattedName = `${name.replace(/\s/g,'_').trim()}`;
   const description = reason.split('\r\n\r\n').reduce((prevValue, value) => {
     return `${prevValue}<p>${value}</p>`;
   }, ``);
@@ -110,3 +120,15 @@ function sortByName(json) {
     return 0;
   });
 }
+
+const vote = (event) => {
+  event.preventDefault;
+  const element = event.srcElement;
+  const name = element.dataset.name;
+  element.innerText = 'Voted';
+  element.className = 'vote voted'
+  window.localStorage.setItem(name, 'true');
+};
+
+const votingOn = (event) => event.srcElement.parentNode.className = 'voting';
+const votingOff = (event) => event.srcElement.parentNode.className = '';

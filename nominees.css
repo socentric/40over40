@@ -5,8 +5,8 @@ main section {
   width: 944px;
 }
 
-main nav a {
-  margin: 5px 20px 5px 0;
+main nav span {
+  margin: 5px 20px -10px 0;
 }
 
 main nav a:hover {
@@ -18,7 +18,7 @@ main nav a:hover div {
 }
 
 main nav p {
-  font-size: 20px;
+  font-size: 18px;
   margin: 8px 0 10px;
 }
 
@@ -76,7 +76,7 @@ div.with-picture {
 #detailContainer nav {
   position: absolute;
   bottom: 15px;
-  padding: 01px;
+  padding: 1px;
 }
 
 #detailContainer nav img {
@@ -120,8 +120,9 @@ div.with-picture {
   }
 
   main nav p {
-    font-size: 20px;
+    font-size: 16px;
     margin: 10px 0 20px;
+    text-align: left;
   }
 
   #thumbnailContainer {
@@ -209,6 +210,17 @@ div.with-picture {
   .back-to-nominees:hover {
     opacity: 1;
   } 
+
+  span button.vote {
+    top: 297px;
+  }
+
+  .content h2 button.vote {
+    top: 413px;
+    right: 10px;
+    font-size: 12px;
+    height: 22px;
+  }
 }
 
 #adminActionsContainer {
@@ -225,4 +237,45 @@ h2.published {
   width: 100%;
   height: auto;
   border: none;
+}
+
+button.vote {
+  position: absolute;
+  right: 0;
+  top: 295px;
+  -webkit-font-smoothing: antialiased;
+  background-color: #000;
+  border: 0px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  height: 22px;
+  letter-spacing: 1px;
+  padding: 0px 8px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 150ms ease-in-out 0s;
+  border: solid 1px #000;
+}
+
+button.vote:hover, 
+button.voted {
+  color: #000;
+  background-color: #fff;
+}
+
+button.voted {
+  cursor: text;
+}
+
+.voting div {
+  opacity: 0.6;
+}
+
+h2 button.vote {
+  top: 20px;
+  right: 20px;
+  font-size: 16px;
+  height: 27px;
 }

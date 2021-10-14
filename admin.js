@@ -1,5 +1,6 @@
 const voteUrl = 'https://us-central1-stashed-online.cloudfunctions.net/vote';
 const nominateUrl = 'https://us-central1-stashed-online.cloudfunctions.net/nominate';
+const voteforUrl = 'https://us-central1-stashed-online.cloudfunctions.net/votefor';
 let nominees = [];
 let nominee = {};
 
@@ -23,18 +24,29 @@ const renderThumbnailContainer = (nominees, heading) => {
 const renderThumbnail = (nomination) => {
   const {name, pictureUrl} = nomination;
   const inlineStyle = pictureUrl ? `background-image: url('${pictureUrl}')` : ``;
+  const formattedName = `${name.replace(/\s/g,'_').trim()}`;
   return `
-    <a href="#${name.replace(/\s/g,'_').trim()}">
-      <div style="${inlineStyle}" title="View ${name}" class="with-picture"></div>
-      <p>${name}</p>
-    </a>
+    <span style="position:relative;">
+      <a href="#${formattedName}">
+        <div style="${inlineStyle}" title="View ${name}" class="with-picture"></div>
+        <p>${name}</p>
+      </a>
+      ${renderVoteButton(formattedName)}
+    </span>
   `;
+}
+
+const renderVoteButton = (formattedName) => {
+  return !window.localStorage.getItem(formattedName) 
+    ? `<button class="vote" onclick="vote(event);" onmouseover="votingOn(event)" onmouseout="votingOff(event)" data-name="${formattedName}">Vote</button>`
+    : `<button class="vote voted" data-name="${formattedName}">Voted</button>`;
 }
 
 const renderDetail = (nominee) => {
   const {name, company, jobTitle, reason, linkedIn, pictureUrl} = nominee;
   const firstName = name.split(' ')[0];
   const inlineStyle = pictureUrl ? `background-image: url('${pictureUrl}')` : ``;
+  const formattedName = `${name.replace(/\s/g,'_').trim()}`;
   const description = reason.split('\r\n\r\n').reduce((prevValue, value) => {
     return `${prevValue}<p>${value}</p>`;
   }, ``);
@@ -45,7 +57,7 @@ const renderDetail = (nominee) => {
         <img src="images/back-arrow.gif" alt="" />
       </a>  
       <div class="content">
-        <h2>${name}</h2>
+        <h2>${name} ${renderVoteButton(formattedName)}</h2>
         <h3>${jobTitle}${company.toLowerCase() === 'freelance' ? `,` : ` at`} ${company}</h3>
         ${description}
         <nav>
@@ -172,3 +184,33 @@ $deleteButton.addEventListener('click', function (event) {
   xhr.open('DELETE', `${nominateUrl}?email=${nominee.email}`, true);
   xhr.send();
 });
+
+const vote = (event) => {
+  event.preventDefault;
+  const element = event.srcElement;
+  const name = element.dataset.name;
+
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        alert('success');
+        element.innerText = 'Voted';
+        element.className = 'vote voted'
+        window.localStorage.setItem(name, 'true');
+      } else {
+        // Error
+        alert('error');
+    }
+  }
+  xhr.open('POST', 'https://us-central1-stashed-online.cloudfunctions.net/votefor', true);
+  xhr.send({
+    "name": name,
+  });
+  xhr.onloadend = function () {
+    // done
+  };
+};
+
+const votingOn = (event) => event.srcElement.parentNode.className = 'voting';
+const votingOff = (event) => event.srcElement.parentNode.className = '';
