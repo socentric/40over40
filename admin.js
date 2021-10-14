@@ -207,8 +207,9 @@ const vote = (event) => {
       }
     }
   }
-  xhr.setRequestHeader('Content-Type', 'application/json');
+  
   xhr.open('POST', 'https://us-central1-stashed-online.cloudfunctions.net/votefor', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify(payload));
   xhr.onloadend = function () {
     // done
