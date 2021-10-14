@@ -38,7 +38,7 @@ const renderThumbnail = (nomination) => {
 
 const renderVoteButton = (formattedName) => {
   return !window.localStorage.getItem(formattedName) 
-    ? `<button class="vote" onclick="vote(event);" onmouseover="votingOn(event)" onmouseout="votingOff(event)" data-name="${formattedName}">Vote</button>`
+    ? `<button class="vote" onclick="vote(event);" data-name="${formattedName}">Vote</button>`
     : `<button class="vote voted" data-name="${formattedName}">Voted</button>`;
 }
 
@@ -188,13 +188,18 @@ $deleteButton.addEventListener('click', function (event) {
 const vote = (event) => {
   event.preventDefault;
   const element = event.srcElement;
+  if (element.className.includes('voted')) {
+    return false;
+  }
   const name = element.dataset.name;
   const payload = {
     "name": name
   };
 
   element.innerText = 'Voted';
-  element.className = 'vote voted'
+  document.querySelectorAll(`[data-name="${name}"]`).forEach(element => {
+      element.className = 'vote voted';
+  }); 
 
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
@@ -205,7 +210,9 @@ const vote = (event) => {
         // Error
         alert('An error occurred with your vote, please try again');
         element.innerText = 'Vote';
-        element.className = 'vote';
+        document.querySelectorAll(`[data-name="${name}"]`).forEach(element => {
+          element.className = 'vote';
+        }); 
       }
     }
   }
@@ -217,6 +224,3 @@ const vote = (event) => {
     // done
   };
 };
-
-const votingOn = (event) => event.srcElement.parentNode.className = 'voting';
-const votingOff = (event) => event.srcElement.parentNode.className = '';
