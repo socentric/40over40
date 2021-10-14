@@ -201,11 +201,12 @@ const vote = (event) => {
       } else {
         // Error
         alert('error');
+      }
     }
   }
   xhr.open('POST', 'https://us-central1-stashed-online.cloudfunctions.net/votefor', true);
   xhr.send({
-    "name": name,
+    "name": name
   });
   xhr.onloadend = function () {
     // done
