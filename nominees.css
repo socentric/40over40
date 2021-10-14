@@ -269,10 +269,6 @@ button.voted {
   cursor: text;
 }
 
-.voting div {
-  opacity: 0.6;
-}
-
 h2 button.vote {
   top: 20px;
   right: 20px;
