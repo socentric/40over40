@@ -1,5 +1,3 @@
-setLog();
-
 const xmlhttp = new XMLHttpRequest();
 let nominees = [];
 
@@ -37,13 +35,14 @@ const renderThumbnail = (nomination) => {
         <div style="${inlineStyle}" title="View ${name}" class="with-picture"></div>
         <p>${name}</p>
       </a>
+      ${renderVoteButton(formattedName)}
     </span>
   `;
 }
 
 const renderVoteButton = (formattedName) => {
   return !window.localStorage.getItem(formattedName) 
-    ? `<button class="vote" onclick="vote(event);" onmouseover="votingOn(event)" onmouseout="votingOff(event)" data-name="${formattedName}">Vote</button>`
+    ? `<button class="vote" onclick="vote(event);" data-name="${formattedName}">Vote</button>`
     : `<button class="vote voted" data-name="${formattedName}">Voted</button>`;
 }
 
@@ -62,7 +61,7 @@ const renderDetail = (nominee) => {
         <img src="images/back-arrow.gif" alt="" />
       </a>  
       <div class="content">
-        <h2>${name}</h2>
+        <h2>${name} ${renderVoteButton(formattedName)}</h2>
         <h3>${jobTitle}${company.toLowerCase() === 'freelance' ? `,` : ` at`} ${company}</h3>
         ${description}
         <nav>
@@ -124,11 +123,39 @@ function sortByName(json) {
 const vote = (event) => {
   event.preventDefault;
   const element = event.srcElement;
+  if (element.className.includes('voted')) {
+    return false;
+  }
   const name = element.dataset.name;
-  element.innerText = 'Voted';
-  element.className = 'vote voted'
-  window.localStorage.setItem(name, 'true');
-};
+  const payload = {
+    "name": name
+  };
 
-const votingOn = (event) => event.srcElement.parentNode.className = 'voting';
-const votingOff = (event) => event.srcElement.parentNode.className = '';
+  element.innerText = 'Voted';
+  document.querySelectorAll(`[data-name="${name}"]`).forEach(element => {
+      element.className = 'vote voted';
+  }); 
+
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        window.localStorage.setItem(name, 'true');
+      } else {
+        // Error
+        alert('An error occurred with your vote, please try again');
+        element.innerText = 'Vote';
+        document.querySelectorAll(`[data-name="${name}"]`).forEach(element => {
+          element.className = 'vote';
+        }); 
+      }
+    }
+  }
+  
+  xhr.open('POST', 'https://us-central1-stashed-online.cloudfunctions.net/votefor');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify(payload));
+  xhr.onloadend = function () {
+    // done
+  };
+};
