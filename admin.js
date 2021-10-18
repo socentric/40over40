@@ -1,6 +1,6 @@
 const voteUrl = 'https://us-central1-stashed-online.cloudfunctions.net/vote';
 const nominateUrl = 'https://us-central1-stashed-online.cloudfunctions.net/nominate';
-const voteforUrl = 'https://us-central1-stashed-online.cloudfunctions.net/votefor';
+const voteForUrl = 'https://us-central1-stashed-online.cloudfunctions.net/votefor';
 let nominees = [];
 let nominee = {};
 
@@ -11,17 +11,27 @@ const $statusButton = document.getElementById('statusButton');
 const $editButton = document.getElementById('editButton');
 const $deleteButton = document.getElementById('deleteButton');
 
-getVotes();
+getVoteFors();
 
-const renderThumbnailContainer = (nominees, heading) => {
+const renderThumbnailContainer = (nominees, heading, voteForsJson) => {
   $thumbnailContainer.insertAdjacentHTML('beforeend', `<h2 class="${heading.toLowerCase()}">${heading}:</h2>`);
-  nominees.map((nomination) => {
-    const fragment = renderThumbnail(nomination);
-    $thumbnailContainer.insertAdjacentHTML('beforeend', fragment);
-  });
+  if(voteForsJson) {
+    voteForsJson.map(voteFor => {
+      const { name, count } = voteFor;
+      const formattedName = name.replace(/_/g, ' ');
+      const nomination = nominees.filter(nominee => nominee.name === formattedName)[0];
+      const fragment = renderThumbnail(nomination, count);
+      $thumbnailContainer.insertAdjacentHTML('beforeend', fragment);
+    });
+  } else {
+    nominees.map((nomination) => {
+      const fragment = renderThumbnail(nomination);
+      $thumbnailContainer.insertAdjacentHTML('beforeend', fragment);
+    });
+  }
 }
 
-const renderThumbnail = (nomination) => {
+const renderThumbnail = (nomination, count) => {
   const {name, pictureUrl} = nomination;
   const inlineStyle = pictureUrl ? `background-image: url('${pictureUrl}')` : ``;
   const formattedName = `${name.replace(/\s/g,'_').trim()}`;
@@ -29,24 +39,16 @@ const renderThumbnail = (nomination) => {
     <span style="position:relative;">
       <a href="#${formattedName}">
         <div style="${inlineStyle}" title="View ${name}" class="with-picture"></div>
-        <p>${name}</p>
+        <p>${name} ${count ? `(${count})` : '' }</p>
       </a>
-      ${renderVoteButton(formattedName)}
     </span>
   `;
-}
-
-const renderVoteButton = (formattedName) => {
-  return !window.localStorage.getItem(formattedName) 
-    ? `<button class="vote" onclick="vote(event);" data-name="${formattedName}">Vote</button>`
-    : `<button class="vote voted" data-name="${formattedName}">Voted</button>`;
 }
 
 const renderDetail = (nominee) => {
   const {name, company, jobTitle, reason, linkedIn, pictureUrl} = nominee;
   const firstName = name.split(' ')[0];
   const inlineStyle = pictureUrl ? `background-image: url('${pictureUrl}')` : ``;
-  const formattedName = `${name.replace(/\s/g,'_').trim()}`;
   const description = reason.split('\r\n\r\n').reduce((prevValue, value) => {
     return `${prevValue}<p>${value}</p>`;
   }, ``);
@@ -57,7 +59,7 @@ const renderDetail = (nominee) => {
         <img src="images/back-arrow.gif" alt="" />
       </a>  
       <div class="content">
-        <h2>${name} ${renderVoteButton(formattedName)}</h2>
+        <h2>${name}</h2>
         <h3>${jobTitle}${company.toLowerCase() === 'freelance' ? `,` : ` at`} ${company}</h3>
         ${description}
         <nav>
@@ -121,7 +123,13 @@ function sortByName(json) {
   });
 }
 
-function getVotes() {
+function sortByCount(json) {
+  return json.sort((a, b) => {
+    return b.count - a.count;
+  });
+}
+
+function getVotes(voteForsJson) {
   const xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -130,11 +138,24 @@ function getVotes() {
       const unpublishedNominees = sortedNominations.filter(nominee => !nominee.publish || nominee.publish === 'false');
       const publishedNominees = sortedNominations.filter(nominee => nominee.publish === 'true');
       renderThumbnailContainer(unpublishedNominees, 'Unpublished');
-      renderThumbnailContainer(publishedNominees, 'Published');
+      renderThumbnailContainer(publishedNominees, 'Published', voteForsJson);
       nominees = unpublishedNominees.concat(publishedNominees);
     }
   };
   xmlhttp.open('GET', voteUrl, true);
+  xmlhttp.send();
+}
+
+function getVoteFors() {
+  const xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      let json = JSON.parse(this.responseText);
+      var jsonSortedByCount = sortByCount(json);
+      getVotes(jsonSortedByCount);
+    }
+  };
+  xmlhttp.open('GET', voteForUrl, true);
   xmlhttp.send();
 }
 
@@ -184,43 +205,3 @@ $deleteButton.addEventListener('click', function (event) {
   xhr.open('DELETE', `${nominateUrl}?email=${nominee.email}`, true);
   xhr.send();
 });
-
-const vote = (event) => {
-  event.preventDefault;
-  const element = event.srcElement;
-  if (element.className.includes('voted')) {
-    return false;
-  }
-  const name = element.dataset.name;
-  const payload = {
-    "name": name
-  };
-
-  element.innerText = 'Voted';
-  document.querySelectorAll(`[data-name="${name}"]`).forEach(element => {
-      element.className = 'vote voted';
-  }); 
-
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        window.localStorage.setItem(name, 'true');
-      } else {
-        // Error
-        alert('An error occurred with your vote, please try again');
-        element.innerText = 'Vote';
-        document.querySelectorAll(`[data-name="${name}"]`).forEach(element => {
-          element.className = 'vote';
-        }); 
-      }
-    }
-  }
-  
-  xhr.open('POST', 'https://us-central1-stashed-online.cloudfunctions.net/votefor');
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(JSON.stringify(payload));
-  xhr.onloadend = function () {
-    // done
-  };
-};
