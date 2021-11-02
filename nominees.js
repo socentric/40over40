@@ -41,9 +41,10 @@ const renderThumbnail = (nomination) => {
 }
 
 const renderVoteButton = (formattedName) => {
-  return !window.localStorage.getItem(formattedName) 
-    ? `<button class="vote" onclick="vote(event);" data-name="${formattedName}">Vote</button>`
-    : `<button class="vote voted" data-name="${formattedName}">Voted</button>`;
+  return ``;
+  // return !window.localStorage.getItem(formattedName) 
+  //   ? `<button class="vote" onclick="vote(event);" data-name="${formattedName}">Vote</button>`
+  //   : `<button class="vote voted" data-name="${formattedName}">Voted</button>`;
 }
 
 const renderDetail = (nominee) => {
