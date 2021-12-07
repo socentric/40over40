@@ -45,6 +45,14 @@ const renderThumbnail = (nomination, count) => {
   `;
 }
 
+const renderThumbnails = (pictureUrls) => {
+  const $thumbnails = document.getElementById('thumbnails');
+  pictureUrls.forEach(url => {
+    const inlineStyle = `background-image: url('${url}')`;
+    $thumbnails.insertAdjacentHTML('beforeend', `<div style="${inlineStyle}"></div>`);
+  });
+}
+
 const renderDetail = (nominee) => {
   const {name, company, jobTitle, reason, linkedIn, pictureUrl} = nominee;
   const firstName = name.split(' ')[0];
@@ -134,12 +142,25 @@ function getVotes(voteForsJson) {
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       let json = JSON.parse(this.responseText);
+
+      const top40Nominees = getTop40Nominees(voteForsJson.splice(0, 40), json);
+      const sortedTop40 = sortByName(top40Nominees);
+      const pictureURLs = [];
+      const data = sortedTop40.map(nominee => {
+        const { name, jobTitle, company, pictureUrl } = nominee;
+        pictureURLs.push(pictureUrl);
+        return `${name} / ${jobTitle} / ${company}`;
+      });
+      console.info(data.join('\n'));
+
       var sortedNominations = sortByName(json);   
       const unpublishedNominees = sortedNominations.filter(nominee => !nominee.publish || nominee.publish === 'false');
       const publishedNominees = sortedNominations.filter(nominee => nominee.publish === 'true');
       renderThumbnailContainer(unpublishedNominees, 'Unpublished');
       renderThumbnailContainer(publishedNominees, 'Published', voteForsJson);
       nominees = unpublishedNominees.concat(publishedNominees);
+
+      renderThumbnails(pictureURLs);
     }
   };
   xmlhttp.open('GET', voteUrl, true);
@@ -157,6 +178,14 @@ function getVoteFors() {
   };
   xmlhttp.open('GET', voteForUrl, true);
   xmlhttp.send();
+}
+
+const getTop40Nominees = (top40Votes, nominees) => {
+  const top40Names = top40Votes.reduce((accum, votesFor) => {
+    accum.push(votesFor.name.replace(/_/g, ' '));
+    return accum;
+  }, []);
+  return nominees.filter(nominee => top40Names.includes(nominee.name));
 }
 
 $statusButton.addEventListener('click', function (event) {

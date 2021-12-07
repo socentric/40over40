@@ -18,6 +18,18 @@
   <link rel="stylesheet" type="text/css" href="index.css" media="screen"/>
   <link rel="stylesheet" type="text/css" href="form.css" media="screen"/>
   <link rel="stylesheet" type="text/css" href="nominees.css" media="screen"/>
+
+  <style>
+    #thumbnails {
+      display: flex;
+      flex-wrap:wrap;
+    }
+    #thumbnails div {
+      width: 130px;
+      height: 130px;
+      background-size: cover;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -33,12 +45,13 @@
       <nav class="web-nav">
         <a href="index.html">About</a>
         <a href="nominate.html">Nominate</a>
-        <a href="nominees.html" class="active">2021 Nominees</a>
+        <a href="nominees.html" class="active">2021 40 Over Forty</a>
         <a href="founders.html">Founders</a>
       </nav>
     </section>
   </header>
   <main>
+    <div id="thumbnails"></div>
     <section id="adminActionsContainer">
       <button id="statusButton" class="button"></button>
       <button id="editButton" class="button">Edit</button>
@@ -70,7 +83,6 @@
       </nav>
     </section>
   </footer>
-
   <script src="index.js"></script>
   <script src="admin.js"></script>
 </body>
