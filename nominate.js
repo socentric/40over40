@@ -63,7 +63,7 @@ const successMessage = `
 
 const errorMessage = `
   <h1>Apologies an error has occurred</h1>
-  <p>Please let us know at <a style="text-decoration:underline" href="mailto:hello@40overforty.com?subject=Error occurred while making nomination">hello@40overforty.com</a> so we can resolve the issue and help you add your nomination.<p/>
+  <p>Please let us know at <a style="text-decoration:underline" href="mailto:charlotte@pr-centric.com?subject=Error occurred while making nomination">hello@40overforty.com</a> so we can resolve the issue and help you add your nomination.<p/>
 `;
 
 function alreadyNominatedMessage(name, withHeader) {
