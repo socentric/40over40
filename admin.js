@@ -157,7 +157,8 @@ function getVotes(voteForsJson) {
       const unpublishedNominees = sortedNominations.filter(nominee => !nominee.publish || nominee.publish === 'false');
       const publishedNominees = sortedNominations.filter(nominee => nominee.publish === 'true');
       renderThumbnailContainer(unpublishedNominees, 'Unpublished');
-      renderThumbnailContainer(publishedNominees, 'Published', voteForsJson);
+      // renderThumbnailContainer(publishedNominees, 'Published', voteForsJson);
+      renderThumbnailContainer(publishedNominees, 'Published');
       nominees = unpublishedNominees.concat(publishedNominees);
 
       renderThumbnails(pictureURLs);

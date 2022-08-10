@@ -12,14 +12,15 @@ function getVotes(voteForsJson) {
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       let json = JSON.parse(this.responseText);
-
-      const top40Nominees = getTop40Nominees(voteForsJson.splice(0, 40), json);
-      const sortedNominations = sortByName(top40Nominees);   
-      const unpublishedNominees = sortedNominations.filter(nominee => !nominee.publish || nominee.publish === 'false');
-      const publishedNominees = sortedNominations.filter(nominee => nominee.publish === 'true');
-      renderThumbnailContainer(unpublishedNominees, 'Unpublished');
+      // const top40Nominees = getTop40Nominees(voteForsJson.splice(0, 40), json);
+      // const sortedNominations = sortByName(top40Nominees);   
+      // const unpublishedNominees = sortedNominations.filter(nominee => !nominee.publish || nominee.publish === 'false');
+      // const publishedNominees = sortedNominations.filter(nominee => nominee.publish === 'true');
+      const unpublishedNominees = json.filter(nominee => !nominee.publish || nominee.publish === 'false');
+      const publishedNominees = json.filter(nominee => nominee.publish === 'true');
+      // renderThumbnailContainer(unpublishedNominees, 'Unpublished');
       renderThumbnailContainer(publishedNominees, 'Published', voteForsJson);
-      nominees = unpublishedNominees.concat(publishedNominees);
+      // nominees = unpublishedNominees.concat(publishedNominees);
     }
   };
   xmlhttp.open('GET', voteUrl, true);
