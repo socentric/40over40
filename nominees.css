@@ -53,11 +53,11 @@ div.with-picture {
 #detailContainer div .content {
   width: 380px;
   padding: 0 20px;
-  height: 620px;
+  height: 690px;
   background: #fff;
   position: absolute;
   right: 0;
-  top: 75px;
+  top: 40px;
   color: #000;
   font-size: 18px;
 }
