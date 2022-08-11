@@ -7,6 +7,10 @@ const $detailContainer = document.getElementById('detailContainer');
 xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
     let json = JSON.parse(this.responseText);
+    const nEmails = json.map(item => item.nominatorEmail);
+    console.info([...new Set(nEmails)].toString().replaceAll(',', '\n'));
+    const emails = json.map(item => item.email);
+    console.info([...new Set(emails)].toString().replaceAll(',', '\n'));
     var sortedNominations = sortByName(json);   
     nominees = sortedNominations.filter(nominee => nominee.publish === 'true');
     if(nominees.length > 0) {
