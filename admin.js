@@ -161,7 +161,7 @@ function getVotes(voteForsJson) {
       renderThumbnailContainer(publishedNominees, 'Published');
       nominees = unpublishedNominees.concat(publishedNominees);
 
-      renderThumbnails(pictureURLs);
+      // renderThumbnails(pictureURLs);
     }
   };
   xmlhttp.open('GET', voteUrl, true);
