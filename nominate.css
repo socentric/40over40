@@ -40,7 +40,7 @@
   top: 25px;
  }
 
- .admin nominateForm {
+ .admin #nominateForm {
    display: block!important;
  }
  
