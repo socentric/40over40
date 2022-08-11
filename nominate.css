@@ -39,4 +39,8 @@
   position: relative;
   top: 25px;
  }
+
+ .admin nominateForm {
+   display: block!important;
+ }
  

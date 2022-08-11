@@ -3,10 +3,6 @@ const $messageContainer = document.getElementById('nominationMessage');
 const $alreadyNominatedNames = document.getElementById('alreadyNominatedNames');
 const $alreadyNominatedEmails = document.getElementById('alreadyNominatedEmails');
 
-if (document.location.href.includes('admin')) {
-  document.getElementById('nominateForm').style.display = 'block';
-}
-
 if (typeof Element.prototype.addEventListener === 'undefined') {
   Element.prototype.addEventListener = function (e, callback) {
     e = 'on' + e;
