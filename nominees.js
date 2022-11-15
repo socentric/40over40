@@ -1,25 +1,51 @@
 const xmlhttp = new XMLHttpRequest();
 let nominees = [];
+const voteUrl = 'https://us-central1-stashed-online.cloudfunctions.net/vote';
+const voteForUrl = 'https://us-central1-stashed-online.cloudfunctions.net/votefor';
+getVoteFors();
 
 const $thumbnailContainer = document.getElementById('thumbnailContainer');
 const $detailContainer = document.getElementById('detailContainer');
 
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    let json = JSON.parse(this.responseText);
-    const nEmails = json.map(item => item.nominatorEmail);
-    console.info([...new Set(nEmails)].toString().replaceAll(',', '\n'));
-    const emails = json.map(item => item.email);
-    console.info([...new Set(emails)].toString().replaceAll(',', '\n'));
-    var sortedNominations = sortByName(json);   
-    nominees = sortedNominations.filter(nominee => nominee.publish === 'true');
-    if(nominees.length > 0) {
-      renderThumbnailContainer(nominees);
+function getVotes(voteForsJson) {
+  const xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      let json = JSON.parse(this.responseText);
+      const top40Nominees = getTop40Nominees(voteForsJson.splice(0, 40), json);
+      const sortedNominations = sortByName(top40Nominees);
+      nominees = sortedNominations;
+      //const unpublishedNominees = sortedNominations.filter(nominee => !nominee.publish || nominee.publish === 'false');
+      //const publishedNominees = sortedNominations.filter(nominee => nominee.publish === 'true');
+      //renderThumbnailContainer(unpublishedNominees, 'Unpublished');
+      renderThumbnailContainer(sortedNominations);
+      //nominees = unpublishedNominees.concat(publishedNominees);
     }
-  }
-};
-xmlhttp.open("GET", "https://us-central1-stashed-online.cloudfunctions.net/vote", true);
-xmlhttp.send();
+  };
+  xmlhttp.open('GET', voteUrl, true);
+  xmlhttp.send();
+}
+
+function getVoteFors() {
+  const xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      let json = JSON.parse(this.responseText);
+      var jsonSortedByCount = sortByCount(json);
+      getVotes(jsonSortedByCount);
+    }
+  };
+  xmlhttp.open('GET', voteForUrl, true);
+  xmlhttp.send();
+}
+
+const getTop40Nominees = (top40Votes, nominees) => {
+  const top40Names = top40Votes.reduce((accum, votesFor) => {
+    accum.push(votesFor.name.replace(/_/g, ' '));
+    return accum;
+  }, []);
+  return nominees.filter(nominee => top40Names.includes(nominee.name));
+}
 
 const renderThumbnailContainer = (nominees) => {
   $thumbnailContainer.innerHTML = '';
@@ -122,6 +148,12 @@ function sortByName(json) {
         return 1;
     }
     return 0;
+  });
+}
+
+function sortByCount(json) {
+  return json.sort((a, b) => {
+    return b.count - a.count;
   });
 }
 
