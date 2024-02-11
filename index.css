@@ -64,6 +64,7 @@ header nav a {
   text-align:center;
   text-transform:uppercase;
   color:rgb(154, 150, 150);
+  max-width: 100px;
 }
 
 header nav a.active {
